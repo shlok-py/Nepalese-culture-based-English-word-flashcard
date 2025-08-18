@@ -1,0 +1,112 @@
+[
+  {
+    "id": "word_001",
+    "english": "Namaste",
+    "nepaliContext": "Traditional greeting meaning 'I bow to you'",
+    "meaning": "A respectful greeting with palms pressed together",
+    "example": "She greeted her teacher with a warm namaste.",
+    "culturalNote": "Used in Nepal as both hello and goodbye, showing respect",
+    "image": "/images/cards/namaste.jpg",
+    "difficulty": "beginner",
+    "category": "greetings"
+  },
+  {
+    "id": "word_002",
+    "english": "Dhanyabad",
+    "nepaliContext": "Expression of gratitude in Nepali culture",
+    "meaning": "Thank you - showing appreciation and respect",
+    "example": "He said dhanyabad after receiving help from his neighbor.",
+    "culturalNote": "More formal than 'thanks', used to show deep appreciation",
+    "image": "/images/cards/dhanyabad.jpg",
+    "difficulty": "beginner",
+    "category": "greetings"
+  },
+  {
+    "id": "word_003",
+    "english": "Daal-Bhat",
+    "nepaliContext": "Traditional Nepali meal of lentils and rice",
+    "meaning": "The staple food combination in Nepal",
+    "example": "Every Nepali family enjoys daal-bhat twice a day.",
+    "culturalNote": "Represents home, comfort, and Nepali identity",
+    "image": "/images/cards/daal-bhat.jpg",
+    "difficulty": "beginner",
+    "category": "food"
+  },
+  {
+    "id": "word_004",
+    "english": "Dashain",
+    "nepaliContext": "The biggest festival in Nepal",
+    "meaning": "15-day festival celebrating good over evil",
+    "example": "Families reunite during Dashain to receive blessings from elders.",
+    "culturalNote": "Time for family gatherings, new clothes, and traditional foods",
+    "image": "/images/cards/dashain.jpg",
+    "difficulty": "intermediate",
+    "category": "festivals"
+  },
+  {
+    "id": "word_005",
+    "english": "Tihar",
+    "nepaliContext": "Festival of lights in Nepal",
+    "meaning": "Five-day festival honoring different animals and relationships",
+    "example": "During Tihar, sisters put tika on their brothers' foreheads.",
+    "culturalNote": "Celebrates the bond between siblings and honors animals",
+    "image": "/images/cards/tihar.jpg",
+    "difficulty": "intermediate",
+    "category": "festivals"
+  },
+  {
+    "id": "word_006",
+    "english": "Khukuri",
+    "nepaliContext": "Traditional curved knife of Nepal",
+    "meaning": "A curved blade tool used in Nepal",
+    "example": "The Gurkha soldier carried his khukuri with pride.",
+    "culturalNote": "Symbol of bravery and Nepali heritage",
+    "image": "/images/cards/khukuri.jpg",
+    "difficulty": "intermediate",
+    "category": "culture"
+  },
+  {
+    "id": "word_007",
+    "english": "Momo",
+    "nepaliContext": "Popular Nepali dumpling dish",
+    "meaning": "Steamed dumplings filled with meat or vegetables",
+    "example": "Street vendors sell delicious momos throughout Kathmandu.",
+    "culturalNote": "Originally from Tibet, now a beloved Nepali food",
+    "image": "/images/cards/momo.jpg",
+    "difficulty": "beginner",
+    "category": "food"
+  },
+  {
+    "id": "word_008",
+    "english": "Sherpa",
+    "nepaliContext": "Mountain people of Nepal",
+    "meaning": "Ethnic group known for mountaineering skills",
+    "example": "The Sherpa guide led climbers safely up Mount Everest.",
+    "culturalNote": "Renowned worldwide for their climbing expertise",
+    "image": "/images/cards/sherpa.jpg",
+    "difficulty": "intermediate",
+    "category": "people"
+  },
+  {
+    "id": "word_009",
+    "english": "Sagarmatha",
+    "nepaliContext": "Nepali name for Mount Everest",
+    "meaning": "The highest mountain peak in the world",
+    "example": "Sagarmatha attracts climbers from around the globe.",
+    "culturalNote": "Means 'forehead of the sky' in Nepali",
+    "image": "/images/cards/sagarmatha.jpg",
+    "difficulty": "advanced",
+    "category": "geography"
+  },
+  {
+    "id": "word_010",
+    "english": "Topi",
+    "nepaliContext": "Traditional Nepali cap",
+    "meaning": "A brimless cap worn by Nepali men",
+    "example": "He wore his topi proudly during the cultural ceremony.",
+    "culturalNote": "Symbol of Nepali identity and cultural pride",
+    "image": "/images/cards/topi.jpg",
+    "difficulty": "beginner",
+    "category": "clothing"
+  }
+]
