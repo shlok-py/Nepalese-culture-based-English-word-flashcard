@@ -175,10 +175,6 @@ The app is configured as a PWA with:
 - Cultural context should be authentic and reviewed by native speakers
 - Maintain sensitivity to Nepali culture and traditions
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Acknowledgments
 
 - Nepali cultural consultants for authentic content
