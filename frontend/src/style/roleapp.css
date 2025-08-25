@@ -1,0 +1,14 @@
+.role-app{
+     background-color: #F1F3FF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem; 
+}
+
+@media (max-width: 640px) {
+  .roleapp {
+    padding: 0.5rem;
+  }}

@@ -1,9 +1,48 @@
-import React, { useState, useEffect } from "react";
-import About from "../pages/About";
-import Favourites from "../pages/favourites";
+import React  from "react";
 import "../style/navbar.css"
-import Learn from "../pages/learn";
-import { Link } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
+
+
+//  const Navbar = () =>{ 
+
+//   return (
+//      <>
+//      <nav className="navbar"> 
+//         <div className="nav-brand"> 
+//           <span className="nav-title">NeplaiLearn</span> 
+
+//           </div> 
+//           <div className="nav-links"> 
+//             <NavLink className={({isActive}) =>
+
+//   isActive ? "nav-link active-link" : "nav-link"
+//              }
+//              to="/"> 
+//             <i className="fa-regular fa-house-user"></i>
+//             Home</NavLink >
+//              <NavLink className={({isActive}) =>
+
+//   isActive ? "nav-link active-link" : "nav-link"
+//              } to="/learn"> 
+//              <i className="fa-regular fa-book-open"></i>Learn</NavLink >
+//               <NavLink className={({isActive}) =>
+
+//   isActive ? "nav-link active-link" : "nav-link"
+//              } to="/favourites"> <i className = "fa-heart fa-regular"></i> Favourites </NavLink > 
+//               <NavLink className={({isActive}) =>
+
+//   isActive ? "nav-link active-link" : "nav-link"
+//              } to="/about"> <i className="fa-regular fa-star"></i>About </NavLink > 
+//               </div> 
+//               </nav> 
+      
+//               </> 
+//               ) 
+
+//             }
+
+// export default Navbar
+
 
 export const Navbar = () =>{ 
   return (

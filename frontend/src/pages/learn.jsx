@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../style/learn.css"
+import {useNavigate} from "react-router-dom"
 const Learn =() =>{
+
+    // const navigate = useNavigate();
     return (
         <>
 
@@ -18,7 +21,8 @@ const Learn =() =>{
             Daily Life
         </div>
         <p className="stat-label"> Essential Words for everyday activities</p>
-        <button className="start-button">  <i className="fa-solid fa-chevron-right"></i>Start Learning
+        <button className="start-button" 
+      >  <i className="fa-solid fa-chevron-right"></i>Start Learning
             </button>
     </div>
     
