@@ -1,0 +1,22 @@
+[{
+    "id": "1",
+    "english": "Namaste",
+    "nepaliContext": "नमस्ते",
+    "meaning": "Hello/Greeting",
+    "example": "Namaste, how are you today?",
+    "culturalNote": "Traditional Nepali greeting with palms pressed together, showing respect and humility",
+    "image": "namaste.jpg",
+    "difficulty": "beginner",
+    "category": "greetings"
+  },
+  {
+    "id": "2",
+    "english": "Dhanyabad",
+    "nepaliContext": "धन्यवाद",
+    "meaning": "Thank you",
+    "example": "Dhanyabad for your help.",
+    "culturalNote": "A polite way to express gratitude in Nepali culture",
+    "image": "dhanyabad.jpg",
+    "difficulty": "beginner",
+    "category": "greetings"
+  }]

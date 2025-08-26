@@ -1,0 +1,112 @@
+[
+  {
+    "id": "1",
+    "english": "Namaste",
+    "nepaliContext": "नमस्ते",
+    "meaning": "Hello/Greeting",
+    "example": "Namaste, how are you today?",
+    "culturalNote": "Traditional Nepali greeting with palms pressed together, showing respect and humility",
+    "image": "namaste.jpg",
+    "difficulty": "beginner",
+    "category": "greetings"
+  },
+  {
+    "id": "2",
+    "english": "Dhanyabad",
+    "nepaliContext": "धन्यवाद",
+    "meaning": "Thank you",
+    "example": "Dhanyabad for your help.",
+    "culturalNote": "A polite way to express gratitude in Nepali culture",
+    "image": "dhanyabad.jpg",
+    "difficulty": "beginner",
+    "category": "greetings"
+  },
+  {
+    "id": "3",
+    "english": "Dal Bhat",
+    "nepaliContext": "दाल भात",
+    "meaning": "Rice and lentils",
+    "example": "Dal bhat is a staple food in Nepal.",
+    "culturalNote": "Traditional Nepali meal served twice daily, representing hospitality and nourishment",
+    "image": "dal_bhat.jpg",
+    "difficulty": "intermediate",
+    "category": "food"
+  },
+  {
+    "id": "4",
+    "english": "Momos",
+    "nepaliContext": "ममो",
+    "meaning": "Dumplings",
+    "example": "We enjoyed delicious momos for lunch.",
+    "culturalNote": "Popular street food and comfort dish, often served with spicy chutney",
+    "image": "momos.jpg",
+    "difficulty": "beginner",
+    "category": "food"
+  },
+  {
+    "id": "5",
+    "english": "Pashmina",
+    "nepaliContext": "पश्मिना",
+    "meaning": "Cashmere wool",
+    "example": "She wore a beautiful pashmina shawl.",
+    "culturalNote": "Luxurious wool from Himalayan goats, important for traditional clothing and trade",
+    "image": "pashmina.jpg",
+    "difficulty": "advanced",
+    "category": "clothing"
+  },
+  {
+    "id": "6",
+    "english": "Mandala",
+    "nepaliContext": "मण्डल",
+    "meaning": "Sacred circle",
+    "example": "The mandala represents the universe in Buddhist art.",
+    "culturalNote": "Sacred geometric pattern used in meditation and religious ceremonies",
+    "image": "mandala.jpg",
+    "difficulty": "intermediate",
+    "category": "religion"
+  },
+  {
+    "id": "7",
+    "english": "Stupa",
+    "nepaliContext": "स्तूप",
+    "meaning": "Buddhist shrine",
+    "example": "The Boudhanath stupa is a famous landmark in Kathmandu.",
+    "culturalNote": "Sacred Buddhist monument containing relics, symbolizing enlightenment",
+    "image": "stupa.jpg",
+    "difficulty": "intermediate",
+    "category": "religion"
+  },
+  {
+    "id": "8",
+    "english": "Sherpa",
+    "nepaliContext": "शेर्पा",
+    "meaning": "Mountain guide",
+    "example": "The Sherpa helped us climb the mountain safely.",
+    "culturalNote": "Ethnic group known for mountaineering expertise and high-altitude adaptation",
+    "image": "sherpa.jpg",
+    "difficulty": "advanced",
+    "category": "people"
+  },
+  {
+    "id": "9",
+    "english": "Chai",
+    "nepaliContext": "चाय",
+    "meaning": "Tea",
+    "example": "Would you like some masala chai?",
+    "culturalNote": "Spiced tea served as a gesture of hospitality and social bonding",
+    "image": "chai.jpg",
+    "difficulty": "beginner",
+    "category": "food"
+  },
+  {
+    "id": "10",
+    "english": "Tika",
+    "nepaliContext": "टिका",
+    "meaning": "Forehead mark",
+    "example": "She received a red tika during the festival.",
+    "culturalNote": "Sacred mark applied during religious ceremonies and festivals for blessings",
+    "image": "tika.jpg",
+    "difficulty": "intermediate",
+    "category": "religion"
+  }
+]
