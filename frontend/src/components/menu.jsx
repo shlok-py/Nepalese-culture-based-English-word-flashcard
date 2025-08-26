@@ -331,7 +331,7 @@ const Menu = () => {
   };
 
   const isPracticeActive = () => {
-    return location.pathname === '/quiz' || location.pathname === '/roleselect';
+    return location.pathname === '/quiz' || location.pathname === '/roleplay';
   };
 
   // Styles
@@ -462,7 +462,7 @@ const Menu = () => {
               </li>
               <li>
                 <Link
-                  to="/roleselect"
+                  to="/roleplay"
                   style={{
                     ...dropdownItemStyle,
                     backgroundColor: isActiveLink('/roleplay') ? '#f0f8ff' : 'transparent'
