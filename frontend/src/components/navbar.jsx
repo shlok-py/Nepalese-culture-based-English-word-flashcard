@@ -31,11 +31,11 @@ aria-label = "Toggle menu"
 
   isActive ? "nav-link active-link" : "nav-link"
              } to="/login" onClick={() => setIsopen(false)}> 
-             <i className="fa-regular fa-book-user"></i>Login</NavLink >
+             <i className="fa-regular fa-user"></i>Login</NavLink >
               <NavLink className={({isActive}) =>
 
   isActive ? "nav-link active-link" : "nav-link"
-             } to="/signup" onClick={() => setIsopen(false)}> <i className = "fa-regular fa-user"></i> Signup </NavLink > 
+             } to="/signup" onClick={() => setIsopen(false)}> <i class="fa-solid fa-user-plus"></i> Signup </NavLink > 
            
               </div> 
               </nav> 
