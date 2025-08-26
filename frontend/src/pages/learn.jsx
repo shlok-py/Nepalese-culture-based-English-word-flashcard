@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../style/learn.css";
+import ErrorBoundary from "./errorBoundary.jsx";  // Import the error boundary
+import Dashain from "../assets/dashain.jpg";
 
-const API_BASE = "https://walrus-concise-nationally.ngrok-free.app/";
+
+const API_BASE = "https://walrus-concise-nationally.ngrok-free.app";
 const IMAGE_BASE = `${API_BASE}/images/`; // change if your images live elsewhere
 
 const categories = [
@@ -53,7 +56,9 @@ const Learn = () => {
       {/* Popup modal */}
       {open && selectedCat && (
         <Modal onClose={closeModal} title={`${selectedCat.label}`}>
-          <CategoryFlashcard category={selectedCat} onClose={closeModal} />
+          <ErrorBoundary>
+            <CategoryFlashcard category={selectedCat} onClose={closeModal} />
+          </ErrorBoundary>
         </Modal>
       )}
     </>
@@ -85,11 +90,169 @@ const Modal = ({ title, children, onClose }) => {
 };
 
 /* ---------- Flashcard filtered by category ---------- */
+// const CategoryFlashcard = ({ category, onClose }) => {
+//   const [cards, setCards] = useState([]);
+//   const [currentCard, setCurrentCard] = useState(1); // 1-based for header
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState("");
+
+//   const totalCards = cards.length;
+//   const idx = Math.max(0, currentCard - 1);
+//   const word = cards[idx] || {};
+
+//   useEffect(() => {
+//     const load = async () => {
+//       setLoading(true);
+//       setError("");
+//       try {
+//         const res = await fetch(
+//           `${API_BASE}/api/words/category/${encodeURIComponent(category.value)}`,
+//           {
+//             headers: {
+//               "ngrok-skip-browser-warning": "true",
+//               "Content-Type": "application/json",
+//             },
+//           }
+//         );
+//         const data = await res.json();
+//         const arr = Array.isArray(data) ? data : [];
+//         setCards(arr);
+//         setCurrentCard(arr.length ? 1 : 0);
+//       } catch (e) {
+//         setError("Failed to load words for this category.");
+//         setCards([]);
+//         setCurrentCard(0);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     load();
+//   }, [category]);
+
+//   const handlePrev = () => setCurrentCard((c) => Math.max(1, c - 1));
+//   const handleNext = () => setCurrentCard((c) => Math.min(totalCards || 1, c + 1));
+
+//   const progressPercentage = totalCards > 0 ? (currentCard / totalCards) * 100 : 0;
+//   const imageSrc =
+//     (word.image && `${IMAGE_BASE}${word.image}`) ||
+//     // fallback emoji image via data URL (keeps your CSS intact without importing an asset)
+//     "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%' height='100%' fill='%23f3f4f6'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='28'>📚</text></svg>";
+
+//   return (
+//     <div className="content-box">
+//       <div className="header">
+//         <div className="header-left">
+//           <button className="back-button" onClick={onClose}>
+//             <i className="fa-solid fa-left-long"></i>
+//           </button>
+//           <div className="header-text">
+//             <h2>{category.label}</h2>
+//             <p className="card-counter">
+//               Cards: {totalCards ? currentCard : 0}/{totalCards || 0}
+//             </p>
+
+//             {/* progress bar (100% width so it doesn't overflow) */}
+//             <div style={{ width: "100%", marginTop: 5 }}>
+//               <div
+//                 style={{
+//                   width: "100%",
+//                   backgroundColor: "#e5e7eb",
+//                   borderRadius: 10,
+//                   height: 6,
+//                   overflow: "hidden",
+//                 }}
+//               >
+//                 <div
+//                   style={{
+//                     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+//                     height: "100%",
+//                     borderRadius: 10,
+//                     transition: "width 0.3s ease",
+//                     width: `${progressPercentage}%`,
+//                   }}
+//                 />
+//               </div>
+//             </div>
+
+//             {loading && <p className="card-counter" style={{ marginTop: 6 }}>Loading…</p>}
+//             {error && <p className="card-counter" style={{ marginTop: 6, color: "#b91c1c" }}>{error}</p>}
+//           </div>
+//         </div>
+//       </div>
+
+//       {totalCards === 0 ? (
+//         <div className="card" style={{ marginTop: 12 }}>
+//           <h3 style={{ margin: 0 }}>No words found.</h3>
+//           <p style={{ marginTop: 6, color: "#6b7280" }}>
+//             Try a different category.
+//           </p>
+//         </div>
+//       ) : (
+//         <div className="card" style={{ marginTop: 12 }}>
+//           <img
+//             className="card-image"
+//             src={imageSrc}
+//             alt={word.english || "Card image"}
+//             onError={(e) => {
+//               e.currentTarget.src = imageSrc;
+//             }}
+//           />
+//           <h2 className="card-title">{word.english || "—"}</h2>
+
+//           <p className="card-text">ENGLISH</p>
+//           <p className="card-nep">{word.nepaliContext || "—"}</p>
+
+//           <p className="card-type">
+//             {word.difficulty ? `(${word.difficulty})` : ""}
+//             {word.difficulty && word.category ? " · " : ""}
+//             {word.category || ""}
+//           </p>
+
+//           <p className="card-text">नेपाली</p>
+//           <p className="card-desc">
+//             {word.meaning || word.example || word.culturalNote || "—"}
+//           </p>
+//         </div>
+//       )}
+
+//       {/* nav */}
+//       <div className="navigation">
+//         <button
+//           className="nav-btn prev-btn"
+//           disabled={currentCard <= 1 || totalCards === 0}
+//           onClick={handlePrev}
+//         >
+//           <i className="fa-solid fa-chevron-left"></i>
+//           Previous
+//         </button>
+
+//         <div className="page-footer">
+//           <span className={`indicator ${totalCards ? "active" : ""}`}></span>
+//           <span className="indicator"></span>
+//           <span className="indicator"></span>
+//         </div>
+
+//         <button
+//           className="nav-btn prev-btn"
+//           disabled={currentCard >= totalCards || totalCards === 0}
+//           onClick={handleNext}
+//         >
+//           <i className="fa-solid fa-chevron-right"></i>
+//           Next
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+
 const CategoryFlashcard = ({ category, onClose }) => {
   const [cards, setCards] = useState([]);
   const [currentCard, setCurrentCard] = useState(1); // 1-based for header
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [imageUrl, setImageUrl] = useState(null); // Store the object URL for images
 
   const totalCards = cards.length;
   const idx = Math.max(0, currentCard - 1);
@@ -101,7 +264,13 @@ const CategoryFlashcard = ({ category, onClose }) => {
       setError("");
       try {
         const res = await fetch(
-          `${API_BASE}/api/words/category/${encodeURIComponent(category.value)}`
+          `${API_BASE}/api/words/category/${encodeURIComponent(category.value)}`,
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "true",
+              "Content-Type": "application/json",
+            },
+          }
         );
         const data = await res.json();
         const arr = Array.isArray(data) ? data : [];
@@ -121,11 +290,53 @@ const CategoryFlashcard = ({ category, onClose }) => {
   const handlePrev = () => setCurrentCard((c) => Math.max(1, c - 1));
   const handleNext = () => setCurrentCard((c) => Math.min(totalCards || 1, c + 1));
 
+  // Fetch image bytes whenever the current word changes
+  useEffect(() => {
+    // Check if word.english is defined before making the API call
+    const filename = word?.english?.trim();
+    if (!filename) {
+      setImageUrl(null);
+      return;
+    }
+  
+    // Proceed with image fetch if filename is valid
+    const ctrl = new AbortController();
+    let oldUrl = imageUrl;
+  
+    (async () => {
+      try {
+        const res = await fetch(
+          `${API_BASE}/api/image/${encodeURIComponent(filename.toLowerCase())}`,
+          {
+            method: "POST",
+            headers: { "ngrok-skip-browser-warning": "true" },
+            signal: ctrl.signal,
+          }
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  
+        const blob = await res.blob();
+        const nextUrl = URL.createObjectURL(blob);
+        setImageUrl(nextUrl);
+  
+        if (oldUrl) {
+          requestAnimationFrame(() => URL.revokeObjectURL(oldUrl));
+          oldUrl = null;
+        }
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          setImageUrl(null); // Fallback to null in case of error
+        }
+      }
+    })();
+  
+    return () => {
+      ctrl.abort();
+      if (oldUrl) URL.revokeObjectURL(oldUrl);
+    };
+  }, [word?.english]);
+
   const progressPercentage = totalCards > 0 ? (currentCard / totalCards) * 100 : 0;
-  const imageSrc =
-    (word.image && `${IMAGE_BASE}${word.image}`) ||
-    // fallback emoji image via data URL (keeps your CSS intact without importing an asset)
-    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%' height='100%' fill='%23f3f4f6'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='28'>📚</text></svg>";
 
   return (
     <div className="content-box">
@@ -178,12 +389,13 @@ const CategoryFlashcard = ({ category, onClose }) => {
         </div>
       ) : (
         <div className="card" style={{ marginTop: 12 }}>
+          {/* Use the imageUrl (fetched as Blob) or fallback to default image */}
           <img
             className="card-image"
-            src={imageSrc}
+            src={imageUrl || Dashain} // Fallback to Dashain if imageUrl is not set
             alt={word.english || "Card image"}
             onError={(e) => {
-              e.currentTarget.src = imageSrc;
+              e.currentTarget.src = Dashain; // Fallback image
             }}
           />
           <h2 className="card-title">{word.english || "—"}</h2>

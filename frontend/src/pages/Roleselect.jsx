@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import RolePlay from "../pages/Roleplay";
+import RolePlay from "../pages/Roleplay";
 import "../style/role.css"
 import RoleApp from "../Roleplay/roleapp";
 

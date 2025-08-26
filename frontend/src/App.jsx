@@ -14,6 +14,7 @@ import Landing from './pages/Landing'
 import Login from './Auth/Login'
 import Signup from './Auth/Register'
 // import RoleSelect from './pages/Roleselect'
+import RolePlay from './pages/Roleplay'
 function App() {
 
 
@@ -33,7 +34,7 @@ function App() {
           <Route path="/favourites" element={<Favourites />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/landing" element={<Landing />} />
-              {/* <Route path="/roleselect" element={<RoleSelect  />} /> */}
+              <Route path="/roleplay" element={<RolePlay  />} />
 
         </Routes>
       </div>
