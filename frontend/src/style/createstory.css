@@ -1,0 +1,30 @@
+/* body{
+    background-color: aliceblue;   
+} */
+
+.image-container{
+margin-top: 20px;
+height: 50vh;
+width:100vw
+}
+.create-story-container{
+
+    /* align-items: center;
+    justify-content: center; */
+    text-align: center;
+}
+.create-story-container h2{
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  padding: 10px;
+
+}
+.voice-assist{
+    box-sizing: border-box;
+    background-color: white;
+    margin:10px auto 10px auto;
+    border-radius: 10px;
+    width:50vw;
+    height: 10rem;
+}

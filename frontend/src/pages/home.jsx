@@ -3,7 +3,11 @@ import Navbar from "../components/navbar";
 import "../style/home.css"
 
 const Homepage = () =>{
-
+const handleSubmit = ((onNavigate) =>{
+      const goBack  = () =>{
+onNavigate('role')
+    }
+})
     return(
         <>
         <div className="app-container">

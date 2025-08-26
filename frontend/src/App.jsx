@@ -11,6 +11,8 @@ import Learn from './pages/learn';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Landing from './pages/Landing'
 import CreateStory from './pages/Createstory'
+import Login from './Auth/Login'
+import Signup from './Auth/Register'
 function App() {
 
 
@@ -23,6 +25,8 @@ function App() {
         {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/flashcard" element={<Flashcard />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/favourites" element={<Favourites />} />
