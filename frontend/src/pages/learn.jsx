@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../style/learn.css";
 
-const API_BASE = "http://127.0.0.1:2000";
+const API_BASE = "https://walrus-concise-nationally.ngrok-free.app/";
 const IMAGE_BASE = `${API_BASE}/images/`; // change if your images live elsewhere
 
 const categories = [

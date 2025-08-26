@@ -286,16 +286,15 @@
               font-size: 15px;
             }
           }
-  /* --- Fix empty-looking option buttons --- */
 .quiz-card .option-button,
 .quiz-card .option-button * {
-  color: #1f2937 !important;   /* force dark text */
+  color: #1f2937 !important;   
   font-size: 18px;
   line-height: 1.3;
 }
 
 .quiz-card .option-button {
-  background: #ffffff !important;        /* solid white so text pops */
+  background: #ffffff !important;       
   border: 1.5px solid #e5e7eb !important;
   border-radius: 14px;
   display: flex;
@@ -306,7 +305,7 @@
   text-align: left;
 }
 
-/* Badge A/B/C/D */
+
 .quiz-card .option-badge {
   min-width: 32px;
   height: 32px;
@@ -318,12 +317,11 @@
   place-items: center;
 }
 
-/* Make sure disabled state doesn't hide text */
 .quiz-card .option-button.disabled {
-  opacity: 0.85;               /* slightly dim */
+  opacity: 0.85;              
 }
 
-/* Feedback colors */
+
 .quiz-card .option-button.correct {
   background: #ecfccb !important;
   border-color: #86efac !important;
@@ -334,13 +332,12 @@
   border-color: #fca5a5 !important;
 }
 
-/* Tighter option grid spacing on mobile */
+
 .options-container {
   display: grid;
   gap: 12px;
 }
 
-/* Pin the X to the header's corner */
 .quiz-header { position: relative; }
 
 .close-button {
@@ -351,8 +348,8 @@
   height: 36px;
   border: none;
   border-radius: 10px;
-  background: transparent;      /* no pink box */
-  color: #6b7280;               /* slate */
+  background: transparent;      
+  color: #6b7280;             
   font-size: 22px;
   line-height: 1;
   display: grid;
@@ -362,7 +359,7 @@
 }
 
 .close-button:hover {
-  background: rgba(0,0,0,0.04);  /* subtle hover */
+  background: rgba(0,0,0,0.04); 
   color: #111827;
 }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // ⬅️ add
 import "../style/quiz.css";
 
-const API_BASE = "http://127.0.0.1:2000";
+const API_BASE = "https://walrus-concise-nationally.ngrok-free.app";
 const POST_URL = `${API_BASE}/api/quiz/generate`;
 
 const normalizeFromServer = (q, idx = 0) => {
@@ -46,7 +46,7 @@ const Quiz = () => {
   const postForQuestion = async (payload) => {
     const res = await fetch(POST_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
       body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);

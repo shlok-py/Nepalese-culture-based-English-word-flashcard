@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import "../style/flashcard.css";
+import "../style/favourites.css";
 import Dashain from "../assets/dashain.jpg";
 
-const API_BASE = "http://127.0.0.1:2000";
+const API_BASE = "https://walrus-concise-nationally.ngrok-free.app";
 const IMAGE_BASE = `${API_BASE}/images/`; // adjust if images served elsewhere
 
 const Favourites = () => {
@@ -18,7 +18,13 @@ const Favourites = () => {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch(`${API_BASE}/api/favorites`);
+        const res = await fetch(`${API_BASE}/api/favorites`, {
+          headers: {
+            "ngrok-skip-browser-warning": "true",
+            "Content-Type": "application/json",
+          },
+        });
+
         const data = await res.json();
         const arr = Array.isArray(data) ? data : [];
         setCards(arr);
@@ -63,6 +69,7 @@ const Favourites = () => {
 
   return (
     <>
+      <div className="favourites-page">
       <div className="content-box">
         {/* Page header */}
         <div className="cat-header" style={{ marginBottom: 12 }}>
@@ -93,7 +100,7 @@ const Favourites = () => {
                 <div style={{ width: "100%", backgroundColor: "#e5e7eb", borderRadius: 10, height: 6, overflow: "hidden" }}>
                   <div
                     style={{
-                      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                      background: "#3498db",
                       height: "100%",
                       borderRadius: 10,
                       transition: "width 0.3s ease",
@@ -160,6 +167,7 @@ const Favourites = () => {
             Next
           </button>
         </div>
+      </div>
       </div>
     </>
   );

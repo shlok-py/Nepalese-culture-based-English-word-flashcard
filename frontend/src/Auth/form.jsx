@@ -13,6 +13,7 @@ export default function AuthForm({ mode = "login", onSubmit }) {
   };
 
   return (
+    <div className="form-wrapper">
     <form onSubmit={handleSubmit} className="form-container">
       <h1>{title}</h1>
 
@@ -38,5 +39,7 @@ export default function AuthForm({ mode = "login", onSubmit }) {
         {title}
       </button>
     </form>
+    </div>
+
   );
 }

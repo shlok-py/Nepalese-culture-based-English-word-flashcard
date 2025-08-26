@@ -10,9 +10,10 @@ import "./App.css"
 import Learn from './pages/learn';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Landing from './pages/Landing'
-import CreateStory from './pages/Createstory'
+
 import Login from './Auth/Login'
 import Signup from './Auth/Register'
+// import RoleSelect from './pages/Roleselect'
 function App() {
 
 
@@ -32,7 +33,8 @@ function App() {
           <Route path="/favourites" element={<Favourites />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/landing" element={<Landing />} />
-       <Route path="/createstory" element={<CreateStory />} />
+              {/* <Route path="/roleselect" element={<RoleSelect  />} /> */}
+
         </Routes>
       </div>
     </Router>

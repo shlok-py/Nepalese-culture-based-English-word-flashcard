@@ -167,13 +167,13 @@
 // };
 
 import React, { useState, useEffect } from "react";
-import Dashain from "../assets/dashain.jpg"; // fallback only
+import Dashain from "../assets/dashain.jpg"; 
 import "../style/flashcard.css";
 import HeartButton from "../components/heart";
 import { useNavigate } from "react-router-dom";
 
 
-const API_BASE = "http://127.0.0.1:2000";
+const API_BASE = "https://walrus-concise-nationally.ngrok-free.app";
 const IMAGE_BASE = `${API_BASE}/images/`; // change if your FastAPI serves images elsewhere
 
 const Flashcard = () => {
@@ -193,7 +193,12 @@ const Flashcard = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`${API_BASE}/api/words`);
+      const res = await fetch(`${API_BASE}/api/words`,{
+           headers: {
+            "ngrok-skip-browser-warning": "true",
+            "Content-Type": "application/json",
+          },
+      });
       const data = await res.json();
       setCards(Array.isArray(data) ? data : []);
       setCurrentCard(1);
@@ -244,7 +249,8 @@ const Flashcard = () => {
 
   return (
     <>
-      <div className="content-box">
+    <div className="flashcard">
+<div className="content-box">
         <div className="header">
           <div className="header-left">
             <button className="back-button" onClick={() => navigate("/landing")}>
@@ -291,7 +297,7 @@ const Flashcard = () => {
 
           <div className="favorites">
             <HeartButton />
-            <span> Favourites</span>
+      
           </div>
         </div>
 
@@ -385,6 +391,8 @@ const Flashcard = () => {
           </button>
         </div>
       </div>
+    </div>
+      
     </>
   );
 };
@@ -403,7 +411,7 @@ const ProgressBar = ({ current, total }) => {
   );
 };
 
-const progressContainer = { width: "200%", marginTop: "5px" };
+const progressContainer = { width: "100%", marginTop: "5px" };
 const progressTrack = {
   width: "100%",
   backgroundColor: "#e5e7eb",
