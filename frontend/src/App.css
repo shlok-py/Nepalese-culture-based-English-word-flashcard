@@ -3,5 +3,12 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            background: #F1F3FF;
+            /* background: #F1F3FF; */
         }
+
+/* .app-container{
+
+} */
+.app-container{
+  padding-top: 80px;
+}

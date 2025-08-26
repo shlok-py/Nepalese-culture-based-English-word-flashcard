@@ -1,59 +1,38 @@
 import React from 'react' 
-import Learn from './pages/learn'
-// import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from "./pages/home"
+import Quiz from './pages/Quiz'
+import Menu from "./components/menu"
+import Navbar from "./components/navbar"
+import Flashcard from "./components/flashcard"
+import Favourites from "./pages/favourites"
+import "./App.css"
+// import Landing from './pages/Landing'
+import Learn from './pages/learn';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Landing from './pages/Landing'
 function App() {
 
 
 
-  return (
-    <>
-<Learn />
-{/* <Navbar /> */}
+    return (
+      
+    <Router>
+      <div className='app-container' >
+       
+        {/* <Navbar /> */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/flashcard" element={<Flashcard />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/favourites" element={<Favourites />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/landing" element={<Landing />} />
+       
+        </Routes>
+      </div>
+    </Router>
+  );
 
-{/* <Homepage /> */}
-{/* <About /> */}
-
-    </>
-  )
-
-  // return (
-  //   <BrowserRouter>
-  //     {/* <Navbar />  */}
-
-  //     <Routes>
-  //       <Route path="/" element={<Homepage />} />
-  //       <Route path="/learn" element={<Learn />} />
-  //       <Route path="/favourites" element={<Favourites />} />
-  //       <Route path="/about" element={<About />} />
-  //     </Routes>
-  //   </BrowserRouter>
-  // );
 }
 
 export default App
-
-
-
-// import React from 'react'
-// import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
-// import About from './pages/About'
-// import Learn from './pages/Learn'
-// import Favourites from './pages/Favourites'
-// import TestNav from './testnav'
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//   <TestNav />
-//       <Routes>
-//         <Route path="/" element={<Hom />} />
-//         <Route path="/about" element={<About />} />
-//         <Route path="/learn" element={<Learn />} />
-//         <Route path="/favourites" element={<Favourites />} />
-//       </Routes>
-//     </BrowserRouter>
-//   )
-// }
-
-// export default App

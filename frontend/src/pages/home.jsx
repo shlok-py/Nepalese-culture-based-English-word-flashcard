@@ -1,11 +1,16 @@
 import React from "react";
+import Navbar from "../components/navbar";
 import "../style/home.css"
+
 const Homepage = () =>{
 
     return(
         <>
         <div className="app-container">
-          {/* <Navbar />       */}
+            <div className="nav-container">
+   <Navbar />      
+            </div>
+       
     
                 <div className="hero-section">
    <div className="header">
