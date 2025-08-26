@@ -346,12 +346,12 @@ const Menu = () => {
       {!isMobile ? (
         // Desktop Navigation
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Link
+          {/* <Link
             to="/"
             style={isActiveLink('/') ? activeLinkStyle : linkStyle}
           >
             Home
-          </Link>
+          </Link> */}
           <Link
             to="/flashcard"
             style={isActiveLink('/flashcard') ? activeLinkStyle : linkStyle}
