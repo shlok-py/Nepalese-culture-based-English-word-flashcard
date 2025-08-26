@@ -1,290 +1,214 @@
-// import React, { useEffect, useState } from "react";
-
-
-// const Quiz =  () => {
-
-//       const [card,setCard] = useState("")
-//          const [currentCard, setCurrentCard] = useState(1);
-//       const totalCards = 50;
-//         const [cards, SetCards] = useState([])
-    
-//         const fetchCards = async () => {
-//         try {
-//           const response = await api.get('/api/cards/');
-//           SetCards(response.data.cards);
-//         } catch (error) {
-//           console.error("Error fetching Card", error);
-//         }
-//       };
-//        useEffect(() => {
-//         fetchCards();
-//       }, []);
-    
-//       const favcounter = (card) => {
-//     favcard++;
-//       }
-
-// const [currentquestion, setCurrentQuestion] = useState(0);
-// const [ selectedanswer,SetSelectedAnswer] = useState(null);
-// const [showResult , setShowResult] = useState(false);
-// const [questions, setQuestions] = useState([])
-
-// useEffect(() =>{
-//     setQuestions(quizdata)
-// }, [])
-
-// const handleAnswerClick  = (answer) =>{
-//     if(showResult) return;
-
-
-//     SetSelectedAnswer(answer);
-//     setShowResult(true);
-// }
-// const handleNextQuestion = () => {
-//     if (currentQuestion < questions.length - 1) {
-//       setCurrentQuestion(currentQuestion + 1);
-//       setSelectedAnswer(null);
-//       setShowResult(false);
-//     }
-//   };
-
-//   const handlePreviousQuestion = () => {
-//     if (currentQuestion > 0) {
-//       setCurrentQuestion(currentQuestion - 1);
-//       setSelectedAnswer(null);
-//       setShowResult(false);
-//     }
-//   };
-
-//   if (questions.length === 0) {
-//     return <div className="loading">Loading...</div>;
-//   }
-
-//   const current = questions[currentQuestion];
-//   const isCorrect = selectedAnswer === current.correctAnswer;
-//   const progressPercentage = ((currentQuestion + 1) / questions.length) * 100;
-
-
-
-//     return (
-// <>
-// <div className="quiz-container">
-//     <div className="quiz-wrapper">
-// <div className="quiz-header">
-// <button 
-// onClick={handlePreviousQuestion}
-// disabled = {currentquestion ===0}
-// className="back-button">
-// ←
-// </button>
-// <div className="header-content">
-//     <div className="quiz-title">
-//          <h2 className="title-text">Quick Quiz</h2>
-//          <span className="question-counter">
-//      Question {currentQuestion + 1} of {questions.length}
-//          </span>
-//     </div>
-//     <p className="subtitle"> Test What you've learned</p>
-//     <div className="progress-bar">
-//         <div className="progress-fill" style={{width: `${progressPercentage}%`}}>
-//         </div>
-//     </div>
-// </div>
-//     </div>
-//     <div className="quiz-card">
-//         <div className="question-header">
-//             <div className="question-icon"></div>
-//                      <h2 className="question-text">{current.question}</h2>
-//         </div>
-//         div.
-//     </div>
-// </div>
-// <div className="quiz-box">
-// <div className="options-container">
-//     {current.options.map((options) => {
-//         let buttonclass = "option-button";
-
-//         if(showResult) {
-//             buttonclass +="correct";
-//         } else if (options== selectedanswer && option !== current.correctAnswer){
-//             buttonclass += "incorrect";
-//         } else{
-//             buttonclass +="disabled"
-//         }
-// return (
-//     <button key = {index}
-//     onClick = {() =>  handleAnswerClick(option) }
-//     className = {buttonclass}
-//     disabled  = {showResult} >
-//         {option}
-//     </button>
-// );
-
-//     })}
-
-//    {/* Result Section */}
-//               {showResult && (
-//                 <div className={`result-container ${isCorrect ? 'correct' : 'incorrect'}`}>
-//                   <div className="result-content">
-//                     <div className="result-icon">
-//                       {isCorrect ? '✅' : '❌'}
-//                     </div>
-//                     <div className="result-text">
-//                       <p className={`result-status ${isCorrect ? 'correct' : 'incorrect'}`}>
-//                         {isCorrect ? 'Correct!' : 'Incorrect!'}
-//                       </p>
-//                       <div className="result-explanation">
-//                         {current.explanation}
-//                       </div>
-//                     </div>
-//                   </div>
-                  
-//                   {/* Next Button */}
-//                   {currentQuestion < questions.length - 1 ? (
-//                     <button
-//                       onClick={handleNextQuestion}
-//                       className="next-button"
-//                     >
-//                       <span>Next question</span>
-//                       <span>→</span>
-//                     </button>
-//                   ) : (
-//                     <div className="complete-message">
-//                       🎉 Quiz Complete! Great job!
-//                     </div>
-//                   )}
-//                 </div>
-//               )}
-// </div>
-// </div>
-// </>
-
-
-//     )
-// }
-
-
-// export default Quiz
-
 import React, { useEffect, useState } from "react";
-import "../style/quiz.css"
-const quizdata = [
-  {
-    id: 1,
-    question: 'What is a "School" in Nepali?',
-    options: ['लुगा', 'टेबल', 'विद्यालय', 'पुस्तक'],
-    correctAnswer: 'विद्यालय',
-    explanation: 'School = विद्यालय\nEducation is highly valued in Nepali culture'
-  },
-  {
-    id: 2,
-    question: 'What is "Book" in Nepali?',
-    options: ['कलम', 'पुस्तक', 'कागज', 'मेज'],
-    correctAnswer: 'पुस्तक',
-    explanation: 'Book = पुस्तक\nBooks are considered sacred in Nepali culture'
-  },
-  {
-    id: 3,
-    question: 'What is "Water" in Nepali?',
-    options: ['दूध', 'चिया', 'पानी', 'रस'],
-    correctAnswer: 'पानी',
-    explanation: 'Water = पानी\nWater is essential and sacred in Nepali traditions'
-  },
-  {
-    id: 4,
-    question: 'What is "House" in Nepali?',
-    options: ['घर', 'ढोका', 'झ्याल', 'छत'],
-    correctAnswer: 'घर',
-    explanation: 'House = घर\nHome is the center of Nepali family life'
-  },
-  {
-    id: 5,
-    question: 'What is "Friend" in Nepali?',
-    options: ['शत्रु', 'साथी', 'अपरिचित', 'छिमेकी'],
-    correctAnswer: 'साथी',
-    explanation: 'Friend = साथी\nFriendship is highly valued in Nepali society'
+import { useNavigate } from "react-router-dom"; // ⬅️ add
+import "../style/quiz.css";
+
+const API_BASE = "http://127.0.0.1:2000";
+const POST_URL = `${API_BASE}/api/quiz/generate`;
+
+const normalizeFromServer = (q, idx = 0) => {
+  // Accept aliases "1".."4" OR option_1..option_4
+  const options = [
+    q["1"] ?? q.option_1,
+    q["2"] ?? q.option_2,
+    q["3"] ?? q.option_3,
+    q["4"] ?? q.option_4,
+  ].filter((x) => typeof x === "string" && x.length > 0);
+
+  // right_answer could be text or index "1".."4"
+  let right = q.right_answer;
+  const asIndex = Number(right);
+  if (Number.isInteger(asIndex) && asIndex >= 1 && asIndex <= 4) {
+    right = options[asIndex - 1];
   }
-];
+
+  return {
+    id: q.id ?? idx + 1,
+    question: q.question ?? "",
+    options,
+    correctAnswer: right ?? "",
+    // These fields aren't in your model, but if the API includes them we keep them
+    category: q.category ?? "",
+  };
+};
 
 const Quiz = () => {
-  // Fixed variable names and consistency
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [current, setCurrent] = useState(null);           // current question object
+  const [history, setHistory] = useState([]);             // stack of previous questions
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
-  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();  
 
+  const questionNumber = history.length + (current ? 1 : 0);
+
+  // POST helper
+  const postForQuestion = async (payload) => {
+    const res = await fetch(POST_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return normalizeFromServer(data, questionNumber); // normalize next question
+  };
+
+  // initial load -> POST with empty fields, is_correct false
   useEffect(() => {
-    setQuestions(quizdata);
+    const init = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const nextQ = await postForQuestion({
+          prev_question: "",
+          is_correct: false,
+          right_answer: "",
+          given_answer: "",
+          category: "",
+        });
+        setCurrent(nextQ);
+        setSelectedAnswer(null);
+        setShowResult(false);
+      } catch (e) {
+        setError("Couldn't load quiz. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleAnswerClick = (answer) => {
-    if (showResult) return;
+    if (!current || showResult) return;
     setSelectedAnswer(answer);
     setShowResult(true);
   };
 
-  const handleNextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+  const handleNextQuestion = async () => {
+    if (!current) return;
+
+    const is_correct = selectedAnswer === current.correctAnswer;
+
+    // push current into history so the "Previous" button works
+    setHistory((h) => [...h, { ...current, selectedAnswer, is_correct }]);
+
+    setLoading(true);
+    setError("");
+    try {
+      const nextQ = await postForQuestion({
+        prev_question: current.question || "",
+        is_correct,
+        right_answer: current.correctAnswer || "",
+        given_answer: selectedAnswer || "",
+        category: current.category || "", // may be empty if API didn't send it
+      });
+
+      setCurrent(nextQ);
       setSelectedAnswer(null);
       setShowResult(false);
+    } catch (e) {
+      setError("Couldn't fetch the next question. Please try again.");
+      // If it fails, pop history back (so UI doesn't jump ahead)
+      setHistory((h) => h.slice(0, -1));
+    } finally {
+      setLoading(false);
     }
   };
 
   const handlePreviousQuestion = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-      setSelectedAnswer(null);
-      setShowResult(false);
+    if (!history.length) return;
+    // move one step back locally (no API call)
+    const prev = history[history.length - 1];
+    setHistory((h) => h.slice(0, -1));
+    setCurrent(prev);
+    setSelectedAnswer(prev.selectedAnswer ?? null);
+    setShowResult(!!prev.selectedAnswer);
+  };
+
+  const handleRestart = async () => {
+    setHistory([]);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setLoading(true);
+    setError("");
+    try {
+      const nextQ = await postForQuestion({
+        prev_question: "",
+        is_correct: false,
+        right_answer: "",
+        given_answer: "",
+        category: "",
+      });
+      setCurrent(nextQ);
+    } catch (e) {
+      setError("Couldn't restart quiz.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (questions.length === 0) {
-    return <div className="loading">Loading...</div>;
-  }
+  if (loading && !current) return <div className="loading">⏳ Loading quiz…</div>;
+  if (error && !current) return <div className="loading">{error}</div>;
+  if (!current) return <div className="loading">No question.</div>;
 
-  const current = questions[currentQuestion];
   const isCorrect = selectedAnswer === current.correctAnswer;
-  const progressPercentage = ((currentQuestion + 1) / questions.length) * 100;
+
+  // We don't know total questions; show only the current index
+  const progressPercentage = Math.min(100, (questionNumber % 10) * 10) || 10; // a fun looping bar
 
   return (
     <>
-
       <div className="quiz-container">
         <div className="quiz-wrapper">
+        
           <div className="quiz-header">
-            <button 
+            <button
               onClick={handlePreviousQuestion}
-              disabled={currentQuestion === 0}
+              disabled={!history.length}
               className="back-button"
+              aria-label="Previous question"
+              title="Previous"
             >
               ←
             </button>
+
             <div className="header-content">
               <div className="quiz-title">
                 <h2 className="title-text">🎯 Quick Quiz</h2>
-                <span className="question-counter">
-                  Question {currentQuestion + 1} of {questions.length}
-                </span>
+                <span className="question-counter">Question {questionNumber}</span>
               </div>
-              <p className="subtitle">Test What you've learned</p>
-              <div className="progress-bar">
-                <div className="progress-fill" style={{width: `${progressPercentage}%`}}>
-                </div>
+              <p className="subtitle">Test what you’ve learned</p>
+              <div className="progress-bar" aria-label="Progress">
+                <div className="progress-fill" style={{ width: `${progressPercentage}%` }} />
               </div>
+
+              {error ? (
+                <p className="filter-error" style={{ marginTop: 8 }}>{error}</p>
+              ) : null}
             </div>
+             {/* NEW: X button pinned to header’s top-right */}
+  <button
+    type="button"
+    className="close-button"
+    onClick={() => navigate("/landing")}
+    aria-label="Close and go to landing"
+    title="Close"
+  >
+    ×
+  </button>
           </div>
 
           <div className="quiz-card">
             <div className="question-header">
-              <div className="question-icon">🏫</div>
+              <div className="question-icon">🧠</div>
               <h2 className="question-text">{current.question}</h2>
             </div>
 
             <div className="options-container">
               {current.options.map((option, index) => {
                 let buttonClass = "option-button";
-                
                 if (showResult) {
                   if (option === current.correctAnswer) {
                     buttonClass += " correct";
@@ -294,54 +218,52 @@ const Quiz = () => {
                     buttonClass += " disabled";
                   }
                 }
-
+                const label = String.fromCharCode(65 + index); // A/B/C/D
                 return (
-                  <button 
+                  <button
                     key={index}
                     onClick={() => handleAnswerClick(option)}
                     className={buttonClass}
                     disabled={showResult}
                   >
-                    {option}
+                    <span className="option-badge">{label}</span>
+                    <span className="option-text">{option}</span>
                   </button>
                 );
               })}
 
-              {/* Result Section */}
               {showResult && (
-                <div className={`result-container ${isCorrect ? 'correct' : 'incorrect'}`}>
+                <div className={`result-container ${isCorrect ? "correct" : "incorrect"}`}>
                   <div className="result-content">
-                    <div className="result-icon">
-                      {isCorrect ? '✅' : '❌'}
-                    </div>
+                    <div className="result-icon">{isCorrect ? "🌟" : "🤔"}</div>
                     <div className="result-text">
-                      <p className={`result-status ${isCorrect ? 'correct' : 'incorrect'}`}>
-                        {isCorrect ? 'Correct!' : 'Incorrect!'}
+                      <p className={`result-status ${isCorrect ? "correct" : "incorrect"}`}>
+                        {isCorrect ? "Great job!" : "Nice try!"}
                       </p>
-                      <div className="result-explanation">
-                        {current.explanation}
-                      </div>
+                      {/* No explanation in model; if backend later adds it, you can render it here */}
                     </div>
                   </div>
-                  
-                  {/* Next Button */}
-                  {currentQuestion < questions.length - 1 ? (
-                    <button
-                      onClick={handleNextQuestion}
-                      className="next-button"
-                    >
-                      <span>Next question</span>
-                      <span>→</span>
-                    </button>
-                  ) : (
-                    <div className="complete-message">
-                      🎉 Quiz Complete! Great job!
-                    </div>
-                  )}
+
+                  <button
+                    onClick={handleNextQuestion}
+                    className="next-button"
+                    disabled={loading}
+                    aria-busy={loading ? "true" : "false"}
+                  >
+                    <span>{loading ? "Loading…" : "Next question"}</span>
+                    <span>→</span>
+                  </button>
                 </div>
               )}
             </div>
           </div>
+
+          {/* Restart button at bottom (optional) */}
+          {!showResult && history.length >= 5 ? (
+            <div style={{ marginTop: 12, textAlign: "center" }}>
+              <button onClick={handleRestart} className="next-button soft">Restart</button>
+            </div>
+          ) : null}
         </div>
       </div>
     </>
