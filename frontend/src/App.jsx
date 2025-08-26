@@ -1,8 +1,8 @@
 import React from 'react' 
 import Home from "./pages/home"
 import Quiz from './pages/Quiz'
-import Menu from "./components/menu"
-import Navbar from "./components/navbar"
+// import Menu from "./components/menu"
+// import Navbar from "./components/navbar"
 import Flashcard from "./components/flashcard"
 import Favourites from "./pages/favourites"
 import "./App.css"
@@ -10,6 +10,7 @@ import "./App.css"
 import Learn from './pages/learn';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Landing from './pages/Landing'
+import CreateStory from './pages/Createstory'
 function App() {
 
 
@@ -27,7 +28,7 @@ function App() {
           <Route path="/favourites" element={<Favourites />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/landing" element={<Landing />} />
-       
+       <Route path="/createstory" element={<CreateStory />} />
         </Routes>
       </div>
     </Router>
