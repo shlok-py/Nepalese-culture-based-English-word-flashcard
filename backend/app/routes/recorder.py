@@ -73,12 +73,12 @@ class STTResponse(BaseModel):
 router = APIRouter(prefix="/api/record", tags=["record"])
 
 
-# @router.on_event("startup")
-# def load_model():
-#     global model
-#     model = whisper.load_model(MODEL_SIZE)
-#     # Optional: print(model) to confirm
-#     print(f"[startup] Whisper model loaded: {MODEL_SIZE}")
+@router.on_event("startup")
+def load_model():
+    global model
+    model = whisper.load_model(MODEL_SIZE)
+    # Optional: print(model) to confirm
+    print(f"[startup] Whisper model loaded: {MODEL_SIZE}")
 
 @router.get("/record-and-transcribe", response_model=STTResponse)
 async def record_and_transcribe(

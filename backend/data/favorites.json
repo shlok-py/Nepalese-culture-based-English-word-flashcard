@@ -1,22 +1,22 @@
 [{
-    "id": "1",
-    "english": "Namaste",
-    "nepaliContext": "नमस्ते",
-    "meaning": "Hello/Greeting",
-    "example": "Namaste, how are you today?",
-    "culturalNote": "Traditional Nepali greeting with palms pressed together, showing respect and humility",
-    "image": "namaste.jpg",
-    "difficulty": "beginner",
-    "category": "greetings"
+  "id": "1",
+  "english": "House",
+  "nepaliContext": "घर",
+  "meaning": "A place where people live; dwelling",
+  "example": "We sleep in our house.",
+  "culturalNote": "Houses in Nepal often include multiple generations living together, reflecting strong family bonds",
+  "image": "house.png",
+  "difficulty": "beginner",
+  "category": "daily_life"
   },
   {
-    "id": "2",
-    "english": "Dhanyabad",
-    "nepaliContext": "धन्यवाद",
-    "meaning": "Thank you",
-    "example": "Dhanyabad for your help.",
-    "culturalNote": "A polite way to express gratitude in Nepali culture",
-    "image": "dhanyabad.jpg",
-    "difficulty": "beginner",
-    "category": "greetings"
+  "id": "2",
+  "english": "School",
+  "nepaliContext": "विद्यालय",
+  "meaning": "An educational institution for children",
+  "example": "I go to school every morning.",
+  "culturalNote": "Education is highly valued in Nepali culture, with many schools following both Nepali and English curricula",
+  "image": "school.png",
+  "difficulty": "beginner",
+  "category": "daily_life"
   }]
