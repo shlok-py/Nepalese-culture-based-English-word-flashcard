@@ -36,9 +36,11 @@ def toggle_favorite(
     return progress_service.toggle_favorite(word_id)
 
 @router.get("/favorites", response_model=List[Word])
-def get_favorites(
-    progress_service: ProgressService = Depends(get_progress_service),
-    word_service: WordService = Depends(get_word_service)
-):
-    """Get all favorite words"""
-    return progress_service.get_favorite_words(word_service)
+def get_favorites():
+    """Get all favorite words from data/favorites.json"""
+    import json
+    from ..config import settings
+    from ..models import Word
+    with open(settings.FAV_FILE_PATH, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return [Word(**item) for item in data]

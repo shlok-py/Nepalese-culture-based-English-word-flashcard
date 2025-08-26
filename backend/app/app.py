@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from .config import settings
 from .middleware import setup_middleware
-from .routes import words, progress, health, quiz, recorder
+from .routes import words, progress, health, quiz, recorder, images
 
 def create_app() -> FastAPI:
     """Create and configure the FastAPI application"""
@@ -20,6 +20,7 @@ def create_app() -> FastAPI:
     app.include_router(progress.router)
     app.include_router(quiz.router)
     app.include_router(recorder.router)
+    app.include_router(images.router)
     return app
 
 # Create the app instance
