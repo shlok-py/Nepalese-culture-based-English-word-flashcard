@@ -19,13 +19,13 @@ class Settings:
         "*"  # Allow all origins (for development; restrict in production)
     ]
     
-    # Data Configuration
-    DATA_FILE_PATH: str = r"data\words.json"
-    FAV_FILE_PATH: str = r"data\favorites.json"
+    # Data Configuration - use os.path.join for cross-platform compatibility
+    DATA_FILE_PATH: str = os.path.join("data", "words.json")
+    FAV_FILE_PATH: str = os.path.join("data", "favorites.json")
     
     # Server Configuration
-    HOST: str = "0.0.0.0"
-    PORT: int = 8000
+    HOST: str = os.getenv("HOST", "0.0.0.0")
+    PORT: int = int(os.getenv("PORT", "8000"))
 
 # Global settings instance
 settings = Settings()

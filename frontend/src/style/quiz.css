@@ -367,3 +367,46 @@
   transform: scale(0.98);
 }
 
+/* Offline badge */
+.offline-badge {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+/* Restart button */
+.restart-button {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.restart-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4);
+}
+
+/* Correct answer text */
+.correct-answer-text {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* Filter error */
+.filter-error {
+  color: #dc2626;
+  font-size: 13px;
+  margin-top: 8px;
+}

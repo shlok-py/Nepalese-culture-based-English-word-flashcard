@@ -291,12 +291,100 @@ color: white;
 
 /* Route wrapper to isolate flashcard from global backgrounds */
 .flashcard{
-  background: #ffffff;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
   min-height: 100vh;
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   padding: 12px 0 24px;
   margin: 0;
+}
+
+/* Backend warning banner */
+.backend-warning {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Clickable tags */
+.clickable-tag {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #4f46e5;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: #eef2ff;
+  transition: all 0.2s ease;
+}
+
+.clickable-tag:hover {
+  background: #4f46e5;
+  color: white;
+}
+
+/* Cultural note */
+.card-cultural-note {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #78350f;
+  line-height: 1.5;
+}
+
+/* Page indicators */
+.page-indicators {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Loading state */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  font-size: 1.2rem;
+  color: #6b7280;
+}
+
+/* Retry button */
+.retry-btn {
+  margin-top: 15px;
+  padding: 10px 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.retry-btn:hover {
+  transform: scale(1.05);
 }
