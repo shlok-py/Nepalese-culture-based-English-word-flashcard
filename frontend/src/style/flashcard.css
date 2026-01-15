@@ -388,3 +388,71 @@ color: white;
 .retry-btn:hover {
   transform: scale(1.05);
 }
+
+/* Audio Button Rows */
+.card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.card-title-row .card-title {
+  margin: 0;
+}
+
+.card-nepali-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.card-nepali-row .card-text {
+  margin: 0;
+}
+
+/* Audio Button Component */
+.audio-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  flex-shrink: 0;
+}
+
+.audio-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+}
+
+.audio-btn:active {
+  transform: scale(0.95);
+}
+
+.audio-btn.playing {
+  animation: pulse-audio 0.8s ease-in-out infinite;
+  background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+}
+
+@keyframes pulse-audio {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.6);
+  }
+}

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import "../style/learn.css";
 import ErrorBoundary from "./errorBoundary.jsx";  // Import the error boundary
 import Dashain from "../assets/dashain.jpg";
+import API_CONFIG from "../config/api.js";
+import MainNavbar, { Breadcrumbs } from "../components/MainNavbar.jsx";
+import AudioButton from "../components/AudioButton";
 
-
-const API_BASE = "https://walrus-concise-nationally.ngrok-free.app";
-const IMAGE_BASE = `${API_BASE}/images/`; // change if your images live elsewhere
+// Use centralized API config - defaults to localhost:8000
+const API_BASE = API_CONFIG.BACKEND_URL;
 
 const categories = [
   { label: "Daily Life",   value: "daily_life",   icon: "🏠", desc: "Essential words for everyday activities" },
@@ -18,6 +20,32 @@ const categories = [
 const Learn = () => {
   const [open, setOpen] = useState(false);
   const [selectedCat, setSelectedCat] = useState(null); // { label, value }
+  const [categoryProgress, setCategoryProgress] = useState({});
+
+  // Fetch category progress on mount
+  useEffect(() => {
+    const fetchProgress = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      
+      try {
+        const res = await fetch(`${API_BASE}/api/users/me/category-progress`, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "true",
+          },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setCategoryProgress(data.progress || {});
+        }
+      } catch (error) {
+        console.log("Could not fetch progress:", error);
+      }
+    };
+    fetchProgress();
+  }, [open]); // Refetch when modal closes (after viewing cards)
 
   const openCategory = (cat) => {
     setSelectedCat(cat);
@@ -28,8 +56,21 @@ const Learn = () => {
     setSelectedCat(null);
   };
 
+  // Helper to get progress for a category
+  const getProgress = (categoryValue) => {
+    const progress = categoryProgress[categoryValue];
+    if (!progress) return { percentage: 0, label: "Not started" };
+    return {
+      percentage: progress.percentage || 0,
+      label: `${progress.cards_completed}/${progress.total_cards} cards`
+    };
+  };
+
   return (
     <>
+      <MainNavbar />
+      <div className="learn-page-wrapper">
+      <Breadcrumbs path={["Dashboard", "Learn"]} />
       <div className="cat-header">
         <h1 className="header-content">Choose a Category</h1>
         <div className="header-desc">
@@ -39,17 +80,32 @@ const Learn = () => {
 
       <div className="stats-section">
         <div className="stats-grid">
-          {categories.map((c) => (
-            <div className="stat-card" key={c.value}>
-              <div className="stat-icon">{c.icon}</div>
-              <div className="stat-title">{c.label}</div>
-              <p className="stat-label">{c.desc}</p>
-              <button className="start-button" onClick={() => openCategory(c)}>
-                <i className="fa-solid fa-chevron-right"></i>
-                Start Learning
-              </button>
-            </div>
-          ))}
+          {categories.map((c) => {
+            const progress = getProgress(c.value);
+            return (
+              <div className="stat-card" key={c.value}>
+                <div className="stat-icon">{c.icon}</div>
+                <div className="stat-title">{c.label}</div>
+                <p className="stat-label">{c.desc}</p>
+                
+                {/* Progress Bar */}
+                <div className="category-progress">
+                  <div className="progress-bar-container">
+                    <div 
+                      className="progress-bar-fill" 
+                      style={{ width: `${progress.percentage}%` }}
+                    ></div>
+                  </div>
+                  <span className="progress-text">{progress.label}</span>
+                </div>
+                
+                <button className="start-button" onClick={() => openCategory(c)}>
+                  <i className="fa-solid fa-chevron-right"></i>
+                  {progress.percentage > 0 ? "Continue Learning" : "Start Learning"}
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -61,6 +117,7 @@ const Learn = () => {
           </ErrorBoundary>
         </Modal>
       )}
+      </div>
     </>
   );
 };
@@ -253,6 +310,7 @@ const CategoryFlashcard = ({ category, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [imageUrl, setImageUrl] = useState(null); // Store the object URL for images
+  const [maxCardViewed, setMaxCardViewed] = useState(0); // Track highest card viewed
 
   const totalCards = cards.length;
   const idx = Math.max(0, currentCard - 1);
@@ -266,10 +324,7 @@ const CategoryFlashcard = ({ category, onClose }) => {
         const res = await fetch(
           `${API_BASE}/api/words/category/${encodeURIComponent(category.value)}`,
           {
-            headers: {
-              "ngrok-skip-browser-warning": "true",
-              "Content-Type": "application/json",
-            },
+            headers: API_CONFIG.getHeaders(),
           }
         );
         const data = await res.json();
@@ -290,6 +345,38 @@ const CategoryFlashcard = ({ category, onClose }) => {
   const handlePrev = () => setCurrentCard((c) => Math.max(1, c - 1));
   const handleNext = () => setCurrentCard((c) => Math.min(totalCards || 1, c + 1));
 
+  // Track progress when user views cards
+  useEffect(() => {
+    if (currentCard > maxCardViewed) {
+      setMaxCardViewed(currentCard);
+      
+      // Update progress to backend
+      const updateProgress = async () => {
+        const token = localStorage.getItem("token");
+        if (!token || totalCards === 0) return;
+        
+        try {
+          await fetch(`${API_BASE}/api/users/me/flashcard-progress`, {
+            method: "PUT",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "true",
+            },
+            body: JSON.stringify({
+              category: category.value,
+              cards_completed: currentCard,
+              total_cards: totalCards
+            })
+          });
+        } catch (err) {
+          console.log("Could not update progress:", err);
+        }
+      };
+      updateProgress();
+    }
+  }, [currentCard, maxCardViewed, totalCards, category.value]);
+
   // Fetch image bytes whenever the current word changes
   useEffect(() => {
     // Check if word.english is defined before making the API call
@@ -309,7 +396,7 @@ const CategoryFlashcard = ({ category, onClose }) => {
           `${API_BASE}/api/image/${encodeURIComponent(filename.toLowerCase())}`,
           {
             method: "POST",
-            headers: { "ngrok-skip-browser-warning": "true" },
+            headers: API_CONFIG.getHeaders(),
             signal: ctrl.signal,
           }
         );
@@ -398,7 +485,10 @@ const CategoryFlashcard = ({ category, onClose }) => {
               e.currentTarget.src = Dashain; // Fallback image
             }}
           />
-          <h2 className="card-title">{word.english || "—"}</h2>
+          <div className="card-title-row">
+            <h2 className="card-title">{word.english || "—"}</h2>
+            {word.english && <AudioButton text={word.english} language="english" />}
+          </div>
 
           <p className="card-text">ENGLISH</p>
           <p className="card-nep">{word.nepaliContext || "—"}</p>
@@ -409,7 +499,10 @@ const CategoryFlashcard = ({ category, onClose }) => {
             {word.category || ""}
           </p>
 
-          <p className="card-text">नेपाली</p>
+          <div className="card-nepali-row">
+            <p className="card-text">नेपाली</p>
+            {word.nepaliContext && <AudioButton text={word.nepaliContext} language="nepali" />}
+          </div>
           <p className="card-desc">
             {word.meaning || word.example || word.culturalNote || "—"}
           </p>

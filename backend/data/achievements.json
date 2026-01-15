@@ -1,0 +1,64 @@
+[
+  {
+    "id": "95ea1594-4174-4e5b-b29e-23d92d85546a",
+    "user_id": "da3e87ed-8e09-441c-a4fc-1893eb371fae",
+    "name": "First Steps",
+    "icon": "\ud83c\udfaf",
+    "earned_at": "2026-01-15T08:11:09.519825"
+  },
+  {
+    "id": "2e253218-f80d-46d5-be25-775529322464",
+    "user_id": "da3e87ed-8e09-441c-a4fc-1893eb371fae",
+    "name": "Quick Learner",
+    "icon": "\u26a1",
+    "earned_at": "2026-01-15T08:11:09.520091"
+  },
+  {
+    "id": "dfe7e642-1588-4504-87bb-734096429321",
+    "user_id": "da3e87ed-8e09-441c-a4fc-1893eb371fae",
+    "name": "Word Explorer",
+    "icon": "\ud83d\udd0d",
+    "earned_at": "2026-01-15T08:11:09.520475"
+  },
+  {
+    "id": "d34e47e1-d496-4344-87e0-6729352865cd",
+    "user_id": "815c219f-54ff-4c4a-851d-6ecf102c4e8c",
+    "name": "First Steps",
+    "icon": "\ud83c\udfaf",
+    "earned_at": "2026-01-15T08:26:46.732840"
+  },
+  {
+    "id": "e5fd44a8-a900-41a2-afaa-978417bc13e2",
+    "user_id": "815c219f-54ff-4c4a-851d-6ecf102c4e8c",
+    "name": "Quick Learner",
+    "icon": "\u26a1",
+    "earned_at": "2026-01-15T08:26:46.733123"
+  },
+  {
+    "id": "cd4e6d93-6265-4096-82f3-4228444ad026",
+    "user_id": "815c219f-54ff-4c4a-851d-6ecf102c4e8c",
+    "name": "Word Explorer",
+    "icon": "\ud83d\udd0d",
+    "earned_at": "2026-01-15T08:26:46.733591"
+  },
+  {
+    "id": "bf422aca-3dfd-4f6a-8416-d19fe07b0902",
+    "user_id": "5245b391-1918-439a-a6c3-d81f6a69d53e",
+    "achievement_id": "first_steps",
+    "name": "First Steps",
+    "icon": "\ud83c\udfaf",
+    "description": "Started your learning journey",
+    "xp_bonus": 25,
+    "earned_at": "2026-01-15T15:36:52.568629"
+  },
+  {
+    "id": "fb599f48-4560-42cb-8573-9d89d99740ab",
+    "user_id": "5245b391-1918-439a-a6c3-d81f6a69d53e",
+    "achievement_id": "word_explorer",
+    "name": "Word Explorer",
+    "icon": "\ud83d\udd0d",
+    "description": "Curious about Nepali culture",
+    "xp_bonus": 25,
+    "earned_at": "2026-01-15T15:36:52.569167"
+  }
+]

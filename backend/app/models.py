@@ -55,4 +55,8 @@ class UnderstandQuizResponse(BaseModel):
     option_1: str = Field(alias="1")
     option_2: str = Field(alias="2") 
     option_3: str = Field(alias="3")
+    option_4: str = Field(alias="4")
     right_answer: str
+    
+    class Config:
+        population_by_name = True

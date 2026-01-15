@@ -1,0 +1,314 @@
+/* Main Navbar Styles - Fixed/Sticky Navigation */
+
+nav.main-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #7C3AED !important;
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.main-navbar .navbar-brand:hover {
+  transform: scale(1.02);
+}
+
+.main-navbar .brand-logo {
+  font-size: 1.75rem;
+}
+
+.main-navbar .brand-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.main-navbar .navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.main-navbar .nav-link,
+.main-navbar a.nav-link {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.25s ease;
+  position: relative;
+  border: 2px solid transparent;
+  background: transparent !important;
+}
+
+.main-navbar .nav-link:hover,
+.main-navbar a.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.main-navbar .nav-link.active,
+.main-navbar a.nav-link.active {
+  color: #FFD700 !important;
+  background: rgba(255, 215, 0, 0.15) !important;
+  border-bottom: 3px solid #FFD700;
+  border-radius: 0.5rem 0.5rem 0 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.main-navbar .nav-link.active::after,
+.main-navbar a.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 3px;
+  background: #FFD700;
+  border-radius: 3px 3px 0 0;
+}
+
+.main-navbar .logout-btn,
+.main-navbar button.logout-btn {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.main-navbar .logout-btn:hover,
+.main-navbar button.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-color: #ffffff !important;
+  transform: translateY(-2px);
+}
+
+.main-navbar .mobile-menu-btn {
+  display: none;
+  background: transparent !important;
+  border: none;
+  color: #ffffff !important;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+/* Logout Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-content h3 {
+  font-size: 1.25rem;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+}
+
+.modal-content p {
+  color: #6b7280;
+  margin: 0 0 1.5rem 0;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.btn-cancel {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #e5e7eb;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  padding: 1rem 2rem;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+  margin-top: 70px; /* Space for fixed navbar */
+}
+
+.breadcrumb-link {
+  color: #8B5CF6;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb-link:hover {
+  color: #7C3AED;
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  color: #6b7280;
+}
+
+.separator {
+  color: #9ca3af;
+  margin: 0 0.5rem;
+}
+
+/* Page wrapper for pages with navbar */
+.quiz-with-navbar,
+.roleplay-with-navbar,
+.learn-page-wrapper {
+  padding-top: 70px;
+}
+
+/* Add padding to body for fixed navbar */
+.app-with-navbar {
+  padding-top: 70px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .main-navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .navbar-links {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .nav-link {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    color: #ffffff !important;
+    border: none;
+  }
+  
+  .nav-link:hover {
+    transform: none;
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+  
+  .nav-link.active {
+    background: rgba(255, 215, 0, 0.2) !important;
+    color: #FFD700 !important;
+    border-bottom: 2px solid #FFD700;
+    border-radius: 0.5rem;
+  }
+  
+  .nav-link.active::after {
+    display: none;
+  }
+
+  .logout-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    color: #ffffff !important;
+  }
+
+  .breadcrumbs {
+    padding: 0.75rem 1rem;
+    margin-top: 60px;
+  }
+  
+  .quiz-with-navbar,
+  .roleplay-with-navbar,
+  .learn-page-wrapper {
+    padding-top: 60px;
+  }
+}

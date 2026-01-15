@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Dashain from "../assets/dashain.jpg";
 import "../style/flashcard.css";
 import HeartButton from "../components/heart";
+import AudioButton from "../components/AudioButton";
 import { useNavigate } from "react-router-dom";
 import apiService from "../services/api.js";
 
@@ -42,7 +43,8 @@ const Flashcard = () => {
         setError("No words found");
       }
     } catch (e) {
-      setError("Failed to load words. Using offline data.");
+      console.debug("Using demo flashcard data");
+      // Don't show error - demo mode works seamlessly
       const fallback = apiService.getFallbackWords();
       setCards(fallback);
       setCurrentCard(1);
@@ -126,17 +128,13 @@ const Flashcard = () => {
 
   return (
     <div className="flashcard">
-      {/* Backend status indicator */}
-      {backendStatus === false && (
-        <div className="backend-warning">
-          ⚠️ Offline mode - Using cached data
-        </div>
-      )}
+      {/* Backend status logged to console, not shown to users */}
+      {backendStatus === false && console.debug("Running in demo mode with cached data")}
 
       <div className="content-box">
         <div className="header">
           <div className="header-left">
-            <button className="back-button" onClick={() => navigate("/landing")}>
+            <button className="back-button" onClick={() => navigate("/dashboard")}>
               ←
             </button>
 
@@ -187,9 +185,14 @@ const Flashcard = () => {
             }}
           />
 
-          <h2 className="card-title">
-            {loading ? "Loading…" : word.english || "—"}
-          </h2>
+          <div className="card-title-row">
+            <h2 className="card-title">
+              {loading ? "Loading…" : word.english || "—"}
+            </h2>
+            {!loading && word.english && (
+              <AudioButton text={word.english} language="english" />
+            )}
+          </div>
 
           <p className="card-text">ENGLISH</p>
 
@@ -227,7 +230,12 @@ const Flashcard = () => {
             )}
           </p>
 
-          <p className="card-text">नेपाली</p>
+          <div className="card-nepali-row">
+            <p className="card-text">नेपाली</p>
+            {!loading && word.nepaliContext && (
+              <AudioButton text={word.nepaliContext} language="nepali" />
+            )}
+          </div>
 
           <p className="card-desc">
             {loading

@@ -1,14 +1,24 @@
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-python-multipart==0.0.6
-pydantic==2.5.0
-pytest==7.4.3
-pytest-asyncio==0.21.1
-httpx==0.25.2
-requests==2.31.0
-google-generativeai==0.3.2
-numpy==2.2.6
-pandas==2.2.3
-openai-whisper 
-sounddevice==0.5.2
-soundfile==0.13.1
+# Core dependencies - compatible with Python 3.13
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+pydantic>=2.5.0
+python-dotenv>=1.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+httpx>=0.25.0
+
+# API requests
+requests>=2.31.0
+
+# Gemini AI (for quiz/roleplay)
+google-generativeai>=0.3.2
+
+# Optional: Audio/Whisper features (uncomment if needed and using Python 3.11 or lower)
+# numpy==2.2.6
+# pandas==2.2.3
+# openai-whisper
+# sounddevice==0.5.2
+# soundfile==0.13.1

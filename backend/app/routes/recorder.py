@@ -3,13 +3,22 @@ import tempfile
 from pathlib import Path
 from typing import Optional
 
-import numpy as np
-import sounddevice as sd
-import soundfile as sf
-from fastapi import FastAPI, Query, APIRouter
-from pydantic import BaseModel
+# Optional imports for audio recording features
+try:
+    import numpy as np
+    import sounddevice as sd
+    import soundfile as sf
+    import whisper
+    AUDIO_AVAILABLE = True
+except ImportError:
+    AUDIO_AVAILABLE = False
+    np = None
+    sd = None
+    sf = None
+    whisper = None
 
-import whisper
+from fastapi import FastAPI, Query, APIRouter, HTTPException
+from pydantic import BaseModel
 
 # ---------- Config ----------
 SAMPLE_RATE = 16_000   # Whisper works well at 16 kHz
@@ -18,7 +27,7 @@ MODEL_SIZE = "small"   # tiny/base/small/medium/large-v3 (pick per your GPU/CPU)
 
 
 # Preload Whisper model at startup (so first request is not slow)
-model: Optional[whisper.Whisper] = None
+model = None
 
 
 
@@ -27,6 +36,9 @@ def record_audio_wav(duration_sec: float, sample_rate: int = SAMPLE_RATE, channe
     """
     Records from the default system microphone for `duration_sec`, saves to a temp WAV, returns its path.
     """
+    if not AUDIO_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Audio recording not available - numpy/sounddevice not installed")
+    
     print(f"[record] Recording {duration_sec}s at {sample_rate}Hz, {channels}ch ...")
     frames = int(duration_sec * sample_rate)
 
@@ -50,7 +62,9 @@ def transcribe_with_whisper(wav_path: Path, language: Optional[str] = None) -> d
     Transcribes the given WAV file using the preloaded Whisper model.
     Set language='ne' to force Nepali, or None to auto-detect.
     """
-    assert model is not None, "Whisper model not loaded"
+    if not AUDIO_AVAILABLE or model is None:
+        raise HTTPException(status_code=503, detail="Whisper model not available")
+    
     print(f"[stt] Transcribing: {wav_path}")
     # You can pass language="ne" for Nepali, or leave auto-detect
     result = model.transcribe(str(wav_path), language=language)
@@ -76,9 +90,15 @@ router = APIRouter(prefix="/api/record", tags=["record"])
 @router.on_event("startup")
 def load_model():
     global model
-    model = whisper.load_model(MODEL_SIZE)
-    # Optional: print(model) to confirm
-    print(f"[startup] Whisper model loaded: {MODEL_SIZE}")
+    if AUDIO_AVAILABLE and whisper is not None:
+        try:
+            model = whisper.load_model(MODEL_SIZE)
+            print(f"[startup] Whisper model loaded: {MODEL_SIZE}")
+        except Exception as e:
+            print(f"[startup] Could not load Whisper model: {e}")
+            model = None
+    else:
+        print("[startup] Audio features disabled - whisper/numpy not installed")
 
 @router.get("/record-and-transcribe", response_model=STTResponse)
 async def record_and_transcribe(
@@ -88,6 +108,9 @@ async def record_and_transcribe(
     """
     Records from the server's default microphone for `duration` seconds, transcribes with Whisper, returns text.
     """
+    if not AUDIO_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Audio recording not available - install numpy, sounddevice, soundfile, whisper")
+    
     # Record in a thread (so we don't block the event loop)
     wav_path = await asyncio.to_thread(record_audio_wav, duration, SAMPLE_RATE, CHANNELS)
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/quiz.css";
 import apiService from "../services/api.js";
+import MainNavbar, { Breadcrumbs } from "../components/MainNavbar.jsx";
 
 // Normalize quiz response from server
 const normalizeFromServer = (q, idx = 0) => {
@@ -27,42 +28,191 @@ const normalizeFromServer = (q, idx = 0) => {
   };
 };
 
-// Fallback quiz questions when API is unavailable
+// Expanded fallback quiz questions with Nepali script when API is unavailable
 const getFallbackQuestions = () => [
+  // Daily Life with Nepali script
   {
     id: 1,
-    question: "What is 'Namaste' in Nepali culture?",
-    options: ["A food dish", "A traditional greeting", "A festival", "A dance form"],
-    correctAnswer: "A traditional greeting",
-    category: "greetings"
+    question: "What does 'नमस्ते' (Namaste) mean in English?",
+    options: ["Hello/Greetings", "Goodbye", "Thank you", "Please"],
+    correctAnswer: "Hello/Greetings",
+    category: "daily_life"
   },
   {
     id: 2,
-    question: "Which festival is the biggest in Nepal?",
-    options: ["Tihar", "Holi", "Dashain", "Christmas"],
-    correctAnswer: "Dashain",
-    category: "festivals"
+    question: "How do you say 'Thank you' in Nepali?",
+    options: ["धन्यवाद (Dhanyabad)", "माफ गर्नुहोस् (Maaf garnuhos)", "कृपया (Kripaya)", "नमस्ते (Namaste)"],
+    correctAnswer: "धन्यवाद (Dhanyabad)",
+    category: "daily_life"
   },
   {
     id: 3,
-    question: "What are 'Momos'?",
-    options: ["Traditional dumplings", "A type of bread", "Sweet dessert", "Spicy curry"],
-    correctAnswer: "Traditional dumplings",
-    category: "food"
+    question: "'घर' (Ghar) means _____ in English",
+    options: ["House", "Car", "School", "Market"],
+    correctAnswer: "House",
+    category: "daily_life"
   },
   {
     id: 4,
-    question: "What is a 'Topi'?",
-    options: ["A shoe", "Traditional Nepali cap", "A musical instrument", "A cooking pot"],
+    question: "What is the Nepali word for 'water'?",
+    options: ["पानी (Pani)", "दूध (Dudh)", "चिया (Chiya)", "जुस (Jus)"],
+    correctAnswer: "पानी (Pani)",
+    category: "food_drink"
+  },
+  {
+    id: 5,
+    question: "What are 'मोमो' (Momo)?",
+    options: ["Traditional dumplings", "A type of bread", "Sweet dessert", "Spicy curry"],
+    correctAnswer: "Traditional dumplings",
+    category: "food_drink"
+  },
+  // Festivals
+  {
+    id: 6,
+    question: "What is 'दशैं' (Dashain) in Nepal?",
+    options: ["The biggest festival", "A type of food", "A mountain", "A dance"],
+    correctAnswer: "The biggest festival",
+    category: "festivals"
+  },
+  {
+    id: 7,
+    question: "During which festival do Nepalis worship 'दीपावली' (lights)?",
+    options: ["Tihar", "Dashain", "Holi", "Teej"],
+    correctAnswer: "Tihar",
+    category: "festivals"
+  },
+  {
+    id: 8,
+    question: "What is 'टीका' (Tika) used for during Dashain?",
+    options: ["Blessing mark on forehead", "A sweet dish", "A musical instrument", "A prayer mat"],
+    correctAnswer: "Blessing mark on forehead",
+    category: "festivals"
+  },
+  // Culture & Clothing
+  {
+    id: 9,
+    question: "What is a 'टोपी' (Topi)?",
+    options: ["Traditional Nepali cap", "A shoe", "A musical instrument", "A cooking pot"],
     correctAnswer: "Traditional Nepali cap",
     category: "clothing"
   },
   {
-    id: 5,
-    question: "What does 'Dhanyabad' mean?",
-    options: ["Hello", "Goodbye", "Thank you", "Sorry"],
-    correctAnswer: "Thank you",
-    category: "greetings"
+    id: 10,
+    question: "What is 'गुन्यू चोलो' (Gunyu Cholo)?",
+    options: ["Traditional women's dress", "Men's shirt", "A type of dance", "A festival"],
+    correctAnswer: "Traditional women's dress",
+    category: "clothing"
+  },
+  // Greetings & Phrases
+  {
+    id: 11,
+    question: "How do you say 'How are you?' in Nepali?",
+    options: ["तपाईंलाई कस्तो छ? (Tapailai kasto cha?)", "धन्यवाद (Dhanyabad)", "माफ गर्नुहोस् (Maaf garnuhos)", "नमस्ते (Namaste)"],
+    correctAnswer: "तपाईंलाई कस्तो छ? (Tapailai kasto cha?)",
+    category: "daily_life"
+  },
+  {
+    id: 12,
+    question: "'म ठीक छु' (Ma thik chu) means:",
+    options: ["I am fine", "I am hungry", "I am tired", "I am happy"],
+    correctAnswer: "I am fine",
+    category: "daily_life"
+  },
+  // Food
+  {
+    id: 13,
+    question: "What is 'दाल भात' (Dal Bhat)?",
+    options: ["Rice and lentil soup (staple meal)", "Sweet dessert", "Fried snack", "Spicy pickle"],
+    correctAnswer: "Rice and lentil soup (staple meal)",
+    category: "food_drink"
+  },
+  {
+    id: 14,
+    question: "'चिया' (Chiya) is the Nepali word for:",
+    options: ["Tea", "Coffee", "Milk", "Juice"],
+    correctAnswer: "Tea",
+    category: "food_drink"
+  },
+  {
+    id: 15,
+    question: "What is 'अचार' (Achar)?",
+    options: ["Spicy pickle/condiment", "Rice dish", "Sweet dessert", "Soup"],
+    correctAnswer: "Spicy pickle/condiment",
+    category: "food_drink"
+  },
+  // Nature
+  {
+    id: 16,
+    question: "'सगरमाथा' (Sagarmatha) is the Nepali name for:",
+    options: ["Mount Everest", "A river", "A temple", "A city"],
+    correctAnswer: "Mount Everest",
+    category: "nature"
+  },
+  {
+    id: 17,
+    question: "What does 'हिमाल' (Himal) mean?",
+    options: ["Mountain/Himalaya", "River", "Forest", "Lake"],
+    correctAnswer: "Mountain/Himalaya",
+    category: "nature"
+  },
+  // Numbers
+  {
+    id: 18,
+    question: "'एक' (Ek) is the Nepali number for:",
+    options: ["One", "Two", "Three", "Four"],
+    correctAnswer: "One",
+    category: "daily_life"
+  },
+  {
+    id: 19,
+    question: "How do you say 'five' in Nepali?",
+    options: ["पाँच (Panch)", "दुई (Dui)", "तीन (Tin)", "चार (Char)"],
+    correctAnswer: "पाँच (Panch)",
+    category: "daily_life"
+  },
+  // Transport
+  {
+    id: 20,
+    question: "'बस' (Bus) in Nepali means:",
+    options: ["Bus (same as English)", "Car", "Bicycle", "Train"],
+    correctAnswer: "Bus (same as English)",
+    category: "transport"
+  },
+  // More advanced
+  {
+    id: 21,
+    question: "What is 'पुजा' (Puja)?",
+    options: ["Religious worship/prayer", "A dance", "A food", "A game"],
+    correctAnswer: "Religious worship/prayer",
+    category: "festivals"
+  },
+  {
+    id: 22,
+    question: "'मन्दिर' (Mandir) refers to:",
+    options: ["Temple", "House", "School", "Market"],
+    correctAnswer: "Temple",
+    category: "daily_life"
+  },
+  {
+    id: 23,
+    question: "What is 'खाना' (Khana)?",
+    options: ["Food", "Water", "House", "Family"],
+    correctAnswer: "Food",
+    category: "food_drink"
+  },
+  {
+    id: 24,
+    question: "'परिवार' (Parivar) means:",
+    options: ["Family", "Friend", "Neighbor", "Teacher"],
+    correctAnswer: "Family",
+    category: "daily_life"
+  },
+  {
+    id: 25,
+    question: "What does 'राम्रो' (Ramro) mean?",
+    options: ["Good/Beautiful", "Bad", "Big", "Small"],
+    correctAnswer: "Good/Beautiful",
+    category: "daily_life"
   }
 ];
 
@@ -113,10 +263,11 @@ const Quiz = () => {
         setShowResult(false);
         setUseOffline(false);
       } catch (e) {
-        console.warn("Quiz API unavailable, using offline mode");
+        console.debug("Quiz API unavailable, using demo mode");
         setUseOffline(true);
         loadOfflineQuestion(0);
-        setError("Using offline quiz mode");
+        // Don't show error to user - demo mode works seamlessly
+        setError("");
       } finally {
         setLoading(false);
       }
@@ -159,11 +310,13 @@ const Quiz = () => {
       setSelectedAnswer(null);
       setShowResult(false);
     } catch (e) {
-      setError("Couldn't fetch the next question. Switching to offline mode.");
+      console.debug("Couldn't fetch the next question, using demo mode");
       setUseOffline(true);
       const nextIndex = offlineIndex + 1;
       setOfflineIndex(nextIndex);
       loadOfflineQuestion(nextIndex);
+      // Don't show error to user - demo mode works seamlessly
+      setError("");
     } finally {
       setLoading(false);
     }
@@ -216,8 +369,11 @@ const Quiz = () => {
   const progressPercentage = Math.min(100, (questionNumber % 10) * 10) || 10;
 
   return (
-    <div className="quiz-container">
-      <div className="quiz-wrapper">
+    <>
+      <MainNavbar />
+      <Breadcrumbs path={["Dashboard", "Quiz"]} />
+      <div className="quiz-container quiz-with-navbar">
+        <div className="quiz-wrapper">
         {/* Header */}
         <div className="quiz-header">
           <button
@@ -246,7 +402,7 @@ const Quiz = () => {
           <button
             type="button"
             className="close-button"
-            onClick={() => navigate("/landing")}
+            onClick={() => navigate("/dashboard")}
             aria-label="Close"
             title="Close"
           >
@@ -329,6 +485,7 @@ const Quiz = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

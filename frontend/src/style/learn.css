@@ -13,11 +13,16 @@
             font-family: Arial, Helvetica, sans-serif
         }
 
+        /* Learn page wrapper for proper navbar spacing */
+        .learn-page-wrapper {
+            padding-top: 0;
+        }
+
         .cat-header{
             border: none;
             margin-bottom: 1rem;
             text-align: center;
-            padding: 3rem 2rem 2rem 2rem;
+            padding: 2rem 2rem 2rem 2rem;
         }
         .cat-header .header-content{
             text-align: center;
@@ -44,9 +49,9 @@
 
 }
 .stats-grid{
-display: grid;
-grid-template-columns:  repeat(3, 1fr);
-gap:2rem;
+display: flex;
+flex-wrap: wrap;
+gap: 2rem;
 justify-content: center;
 }
 
@@ -59,7 +64,9 @@ justify-content: center;
     border: 1px solid #e2e8f0;
     transition: all 0.3s ease;
     width: 100%;
-    max-width: 350px;
+    max-width: 320px;
+    min-width: 280px;
+    flex: 0 1 320px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -113,6 +120,8 @@ max-width: 200px;
       display: flex;
       text-transform: none;
           justify-content: center;
+      color: #ffffff !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .start-button:hover{
@@ -130,7 +139,6 @@ transform: translateY(-2px);
 
 @media (min-width:1024px){
     .stats-grid{
-        grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
         gap:1.5rem;
     }
 }
@@ -144,13 +152,16 @@ transform: translateY(-2px);
         padding:1rem;
     }
     .stats-grid{
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: center;
         gap:1.5rem
     }
 
     .stat-card{
         padding:2rem 1.5rem;
         min-height: 260px;
+        max-width: 100%;
+        min-width: auto;
     }
 
     .stat-icon{
@@ -301,4 +312,57 @@ transform: translateY(-2px);
   .modal-body .content-box {
     margin: 0;
   }
+
+/* Category Progress Bar */
+.category-progress {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  transition: width 0.5s ease-out;
+  min-width: 0;
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Completed category indicator */
+.stat-card.completed {
+  border: 2px solid #10b981;
+  position: relative;
+}
+
+.stat-card.completed::after {
+  content: "✓";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+}
   

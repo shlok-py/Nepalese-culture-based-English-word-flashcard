@@ -129,9 +129,11 @@ class ProgressService:
         return favorite_words
 
 import json
-import google.generativeai as genai
-from typing import Dict, Any, Optional
+from google import genai
+from google.genai import types
+from typing import Dict, Any, Optional, Tuple
 from dataclasses import dataclass
+from .fallback_data import get_next_quiz_question, get_next_roleplay_scenario
 
 @dataclass
 class QuizInput:
@@ -153,9 +155,20 @@ class GeminiQuizService:
     """Service for generating quiz questions using Google Gemini"""
     
     def __init__(self, gemini_api_key: str, word_service: 'WordService'):
-        genai.configure(api_key=gemini_api_key)
-        self.model = genai.GenerativeModel('gemini-2.0-flash-exp')  # Updated model
+        # Use the new google-genai SDK
+        self.client = genai.Client(api_key=gemini_api_key)
+        # Use only models that definitely exist in the new SDK
+        self.model_names = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
+        self.current_model_index = 0
         self.word_service = word_service
+    
+    @property
+    def model_name(self):
+        return self.model_names[self.current_model_index % len(self.model_names)]
+    
+    def _try_next_model(self):
+        self.current_model_index += 1
+        print(f"Switching to model: {self.model_name}")
     
     def _determine_difficulty_adjustment(self, is_correct: Optional[bool]) -> str:
         """Determine difficulty adjustment instruction based on previous answer"""
@@ -299,14 +312,33 @@ Return ONLY the corrected JSON object with the exact format:
 
     def generate_quiz(self, quiz_request: QuizRequest) -> Dict[str, Any]:
         """Generate a quiz question using Gemini with validation and critique system"""
+        import random
+        import time
         
         # Build context and difficulty adjustment
         context = self._build_context_prompt(quiz_request)
         difficulty_instruction = self._determine_difficulty_adjustment(quiz_request.is_correct)
         words_context = self._get_words_sample(quiz_request.category)
         
+        # Add randomization to ensure variety
+        question_types = [
+            "word meaning (English to Nepali translation)",
+            "word meaning (Nepali to English translation)", 
+            "cultural practice or tradition",
+            "festival or celebration",
+            "food and cuisine",
+            "greeting or polite expression",
+            "family relationship terms",
+            "common phrases used in daily life"
+        ]
+        random_type = random.choice(question_types)
+        random_seed = int(time.time() * 1000) % 10000
+        
         # Construct the initial prompt
-        initial_prompt = f"""You are creating a Nepali language and culture quiz question. 
+        initial_prompt = f"""You are creating a Nepali language and culture quiz question.
+        
+IMPORTANT: Generate a UNIQUE question. Random seed: {random_seed}
+Focus on this topic type: {random_type}
 
 {context}
 
@@ -316,13 +348,14 @@ Based on the user's previous performance, {difficulty_instruction}.
 
 Create a multiple-choice question about Nepali language, culture, or vocabulary. The question should be educational and help users learn about Nepal.
 
-You can use both English and Nepali Devanagari script as appropriate for the content.
+Write the question and options primarily in ENGLISH so learners can understand. You may include Nepali words/script in parentheses where helpful.
 
 Requirements:
 1. Generate exactly 4 options
 2. Make sure one option is clearly correct
 3. Make the other 3 options plausible but incorrect
-4. Question types can include:
+4. GENERATE A DIFFERENT QUESTION EACH TIME - do not repeat previous questions
+5. Question types can include:
    - Word meanings (English to Nepali or Nepali to English)
    - Cultural significance
    - Usage in context
@@ -332,11 +365,11 @@ Requirements:
 
 Return your response as a valid JSON object with this exact format:
 {{
-    "question": "Your question here (can be in English or Nepali)",
-    "1": "First option (can be in English or Nepali)", 
-    "2": "Second option (can be in English or Nepali)",
-    "3": "Third option (can be in English or Nepali)",
-    "4": "Fourth option (can be in English or Nepali)",
+    "question": "Your question here (primarily in English)",
+    "1": "First option", 
+    "2": "Second option",
+    "3": "Third option",
+    "4": "Fourth option",
     "right_answer": "The exact text of the correct option"
 }}
 
@@ -354,14 +387,21 @@ The JSON structure must be valid and complete with all 6 fields."""
                     # Use critique prompt for retries
                     current_prompt = self._current_critique_prompt
                 
-                # Make API call to Gemini
-                response = self.model.generate_content(
-                    current_prompt,
-                    generation_config=genai.types.GenerationConfig(
-                        temperature=0.7 if attempt == 0 else 0.3,  # Reduce temperature for corrections
-                        max_output_tokens=500,
+                # Make API call to Gemini using new SDK
+                try:
+                    response = self.client.models.generate_content(
+                        model=self.model_name,
+                        contents=current_prompt,
+                        config=types.GenerateContentConfig(
+                            temperature=0.7 if attempt == 0 else 0.3,
+                            max_output_tokens=500,
+                        )
                     )
-                )
+                except Exception as model_error:
+                    if "429" in str(model_error) or "RESOURCE_EXHAUSTED" in str(model_error):
+                        self._try_next_model()  # Try next model
+                        raise model_error  # Will be caught by outer except
+                    raise
                 
                 # Extract response text safely
                 try:
@@ -424,15 +464,8 @@ The JSON structure must be valid and complete with all 6 fields."""
         return self._generate_fallback_quiz()
     
     def _generate_fallback_quiz(self) -> Dict[str, Any]:
-        """Generate a fallback quiz question if Gemini fails"""
-        return {
-            "question": "What is the traditional greeting in Nepal?",
-            "1": "Namaste",
-            "2": "Hello",
-            "3": "Salam",
-            "4": "Bonjour",
-            "right_answer": "Namaste"
-        }
+        """Generate a fallback quiz question from the rich question bank"""
+        return get_next_quiz_question()
     
     def generate_understand_quiz(self, quiz_request: QuizRequest) -> Dict[str, Any]:
         """Generate an understanding quiz question"""
@@ -445,48 +478,52 @@ The JSON structure must be valid and complete with all 6 fields."""
         category = random_word.category if random_word else "greetings"
         
         
-        prompt = f"""You are creating a Nepali language and culture understanding quiz question.  
-            Return the response strictly in JSON format following this schema:
+        prompt = f"""You are creating a cultural roleplay scenario about Nepali culture for English-speaking learners.
 
-        
-            "context": "<string>",
-            "question": "<string>",
-            "1": "<string>",
-            "2": "<string>",
-            "3": "<string>",
-            "right_answer": "<string>"
-        
+IMPORTANT: Write ALL content in ENGLISH. You may include Nepali words in parentheses for key terms.
 
-            Where:
-            - "context": A natural context sentence where the word or cultural category might appear in everyday Nepali life.  
-            - "question": A quiz-style question (multiple choice or fill-in-the-blank) based on cultural use, significance, or situational context of the word.  
-            - "1", "2", "3": Three possible answers.  
-            - At least one must be correct and culturally appropriate.  
-            - Others should be plausible but represent common mistakes.  
-            - Keep phrasing natural and realistic in Nepali context.  
-            - "right_answer": The key ("1", "2", or "3") of the correct option.  
+Return the response strictly in JSON format following this schema:
+{{
+    "context": "<string describing a cultural scenario in Nepal>",
+    "question": "<string asking what the appropriate response/action is>",
+    "1": "<first option>",
+    "2": "<second option>", 
+    "3": "<third option>",
+    "4": "<fourth option>",
+    "right_answer": "<the number 1, 2, 3, or 4 of the correct option>"
+}}
 
-            For the word "{word}", which means {explanation}, and belongs to {category} category, generate the JSON.  
+Where:
+- "context": A realistic cultural scenario in Nepal (written in ENGLISH), such as visiting a temple, attending a festival, shopping at a bazaar, dining at a Nepali home, etc.
+- "question": Ask what the culturally appropriate action or response would be.
+- "1", "2", "3", "4": Four possible answers - one correct and culturally appropriate, others are common mistakes foreigners might make.
+- "right_answer": The number ("1", "2", "3", or "4") of the correct option.
 
-            Example Output:
-            
-            "context": "You want to buy an apple from a local shop.",
-            "question": "How do you politely greet or ask the shopkeeper for an apple?",
-            "1": "Give apple",
-            "2": "Please give me apple",
-            "3": "Hi brother",
-            "right_answer": "2"
-            
-        """
+For the word "{word}", which means {explanation}, and belongs to {category} category, create an engaging roleplay scenario.
+
+Example Output:
+{{
+    "context": "You are visiting a Nepali friend's home for dinner. The host offers you a second helping of dal bhat (lentil soup with rice).",
+    "question": "What is the polite way to accept the food?",
+    "1": "Grab the bowl yourself and serve more",
+    "2": "Say 'Dhanyabad' (thank you) and accept graciously with both hands",
+    "3": "Refuse loudly and push the plate away",
+    "4": "Leave the table without saying anything",
+    "right_answer": "2"
+}}
+
+Generate a DIFFERENT scenario each time - do not repeat the same question!"""
         max_attempts = 3
 
         for attempt in range(max_attempts):
             try:
                 current_prompt = prompt if attempt == 0 else self._current_critique_prompt
 
-                response = self.model.generate_content(
-                    current_prompt,
-                    generation_config=genai.types.GenerationConfig(
+                # Make API call to Gemini using new SDK
+                response = self.client.models.generate_content(
+                    model=self.model_name,
+                    contents=current_prompt,
+                    config=types.GenerateContentConfig(
                         temperature=0.7 if attempt == 0 else 0.3,
                         max_output_tokens=500,
                     )
@@ -577,20 +614,20 @@ The JSON structure must be valid and complete with all 6 fields."""
 
     def _validate_understand_quiz_response(self, data: dict) -> Tuple[bool, Optional[UnderstandQuizResponse], str]:
         # Must include correct keys and valid right_answer
-        missing = [k for k in ["context", "question", "1", "2", "3", "right_answer"] if k not in data]
+        missing = [k for k in ["context", "question", "1", "2", "3", "4", "right_answer"] if k not in data]
         if missing:
             return False, None, f"Missing keys: {', '.join(missing)}"
 
-        if data.get("right_answer") not in {"1", "2", "3"}:
-            return False, None, "right_answer must be one of '1','2','3'."
+        if data.get("right_answer") not in {"1", "2", "3", "4"}:
+            return False, None, "right_answer must be one of '1','2','3','4'."
 
         try:
-            # Validate; aliases map "1","2","3" to fields
+            # Validate; aliases map "1","2","3","4" to fields
             validated = UnderstandQuizResponse.model_validate(data)
             # Non-empty basic checks
             if not all([validated.context.strip(), validated.question.strip(),
                         validated.option_1.strip(), validated.option_2.strip(),
-                        validated.option_3.strip()]):
+                        validated.option_3.strip(), validated.option_4.strip()]):
                 return False, None, "Fields must be non-empty strings."
             return True, validated, ""
         except ValidationError as ve:
@@ -604,31 +641,25 @@ The JSON structure must be valid and complete with all 6 fields."""
             f"{raw_text}\n\n"
             "Please regenerate strictly as raw JSON with NO code fences and NO extra commentary.\n"
             + self._schema_understand_prompt()
-            + "\nEnsure Nepali phrasing is natural and culturally correct."
+            + "\nWrite ALL content in ENGLISH. Ensure cultural scenarios are authentic."
         )
     def _schema_understand_prompt(self) -> str:
         return """
         Output JSON schema:
         {
-        "context": "<string>",
-        "question": "<string>",
-        "1": "<string>",
-        "2": "<string>",
-        "3": "<string>",
-        "right_answer": "<string>"
+        "context": "<string - cultural scenario in ENGLISH>",
+        "question": "<string - question in ENGLISH>",
+        "1": "<string - first option>",
+        "2": "<string - second option>",
+        "3": "<string - third option>",
+        "4": "<string - fourth option>",
+        "right_answer": "<string - '1', '2', '3', or '4'>"
         }
         """.strip()
 
     def _generate_understand_fallback_quiz(self, word: str) -> dict:
-        # Minimal safe fallback
-        return {
-            "context": "तपाईं स्थानीय पसलमा सामान किन्न हुनुहुन्छ।",
-            "question": f"‘{word}’ शब्द प्रयोग गरेर पसलेसँग कसरी सभ्य ढंगले कुरा गर्नुहुन्छ?",
-            "1": "मलाई तुरुन्त दे",
-            "2": "कृपया यो दिनुहोस्",
-            "3": "हाय भाई",
-            "right_answer": "2"
-        }
+        """Generate a rich fallback roleplay scenario from the scenario bank"""
+        return get_next_roleplay_scenario()
 
     # # Usage example:
     # def example_usage():

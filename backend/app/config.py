@@ -1,5 +1,9 @@
 import os
 from typing import List
+from dotenv import load_dotenv
+
+# Load .env file FIRST before any os.getenv calls
+load_dotenv()
 
 class Settings:
     """Application settings and configuration"""
@@ -26,6 +30,14 @@ class Settings:
     # Server Configuration
     HOST: str = os.getenv("HOST", "0.0.0.0")
     PORT: int = int(os.getenv("PORT", "8000"))
+    
+    # Gemini API Configuration
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    
+    def __init__(self):
+        """Log configuration on startup"""
+        gemini_status = "✅ CONFIGURED" if self.GEMINI_API_KEY else "❌ NOT SET"
+        print(f"[config] Gemini API Key: {gemini_status}")
 
 # Global settings instance
 settings = Settings()

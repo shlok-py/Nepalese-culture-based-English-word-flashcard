@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/roleplay.css";
 import apiService from "../services/api.js";
+import MainNavbar, { Breadcrumbs } from "../components/MainNavbar.jsx";
 
 // Normalize response from server
 const normalizeFromServer = (q) => {
@@ -196,17 +197,20 @@ const RolePlay = () => {
   const progressPercentage = Math.min(100, (questionNumber / 10) * 10) || 10;
 
   return (
-    <div className="quiz-container roleplay-container">
-      <div className="quiz-wrapper">
-        {/* Header */}
-        <div className="quiz-header">
-          <button 
-            onClick={() => navigate("/landing")} 
-            className="close-button" 
-            aria-label="Close"
-          >
-            ×
-          </button>
+    <>
+      <MainNavbar />
+      <Breadcrumbs path={["Dashboard", "Roleplay"]} />
+      <div className="quiz-container roleplay-container roleplay-with-navbar">
+        <div className="quiz-wrapper">
+          {/* Header */}
+          <div className="quiz-header">
+            <button 
+              onClick={() => navigate("/dashboard")} 
+              className="close-button" 
+              aria-label="Close"
+            >
+              ×
+            </button>
 
           <div className="header-content">
             <div className="quiz-title">
@@ -304,6 +308,7 @@ const RolePlay = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

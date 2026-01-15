@@ -1,0 +1,315 @@
+/* ═══════════════════════════════════════════════════════════════
+   LEADERBOARD STYLES
+   Purple gradient theme
+   ═══════════════════════════════════════════════════════════════ */
+
+@import './theme.css';
+
+.leaderboard-container {
+  min-height: 100vh;
+  background: #F1F3FF;
+  padding: 2rem;
+}
+
+/* Loading State */
+.leaderboard-loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: #F1F3FF;
+}
+
+/* Header Section */
+.leaderboard-header-section {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+}
+
+.back-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #764ba2;
+}
+
+.header-content-lb {
+  text-align: center;
+}
+
+.header-content-lb h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.header-content-lb p {
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+/* Podium Section */
+.podium-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  padding: 2rem 0;
+}
+
+.podium-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.podium-item:hover {
+  transform: translateY(-8px);
+}
+
+.podium-1 {
+  order: 2;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  padding: 2rem;
+}
+
+.podium-2 {
+  order: 1;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+.podium-3 {
+  order: 3;
+  background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+}
+
+.podium-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.podium-1 .podium-avatar {
+  width: 80px;
+  height: 80px;
+  font-size: 2rem;
+}
+
+.podium-badge {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.podium-1 .podium-badge {
+  font-size: 2.5rem;
+}
+
+.podium-name {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.podium-xp {
+  color: #667eea;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.podium-streak {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+/* Leaderboard Table */
+.leaderboard-table-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.leaderboard-table th {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.leaderboard-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.2s;
+}
+
+.leaderboard-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.leaderboard-table tbody tr.current-user-row {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.leaderboard-table td {
+  padding: 1rem 1.5rem;
+}
+
+.rank-cell {
+  width: 80px;
+}
+
+.rank-badge {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.rank-badge.rank-1,
+.rank-badge.rank-2,
+.rank-badge.rank-3 {
+  font-size: 1.5rem;
+}
+
+.user-cell {
+  flex: 1;
+}
+
+.user-info-lb {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-avatar-lb {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.user-name-lb {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.you-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.xp-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.xp-value {
+  font-weight: 700;
+  color: #667eea;
+  font-size: 1.1rem;
+}
+
+.xp-label {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.streak-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.streak-icon {
+  font-size: 1.1rem;
+}
+
+.streak-value {
+  color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .leaderboard-container {
+    padding: 1rem;
+  }
+  
+  .podium-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .podium-1,
+  .podium-2,
+  .podium-3 {
+    order: unset;
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 0.75rem 1rem;
+  }
+  
+  .header-content-lb h1 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .leaderboard-table th:nth-child(4),
+  .leaderboard-table td:nth-child(4) {
+    display: none;
+  }
+}
